@@ -1,0 +1,72 @@
+@import '../../../../styles/variaveis';
+
+
+.scroll-container {
+  max-height: 250px;
+  overflow-y: auto;
+  width:  100%;
+}
+
+table {
+  width:  100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  background-color: $color-bg-body;
+  // table-layout: fixed; 
+}
+
+th {
+  padding: 15px 10px;
+  text-align: left;
+  background-color:$color-input-bg;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: uppercase; 
+  letter-spacing: 1px; 
+  border-bottom: 2px solid #444; 
+}
+
+
+td {
+  padding: 12px 10px;
+  text-align: left;
+  font-size: 1rem;
+  color: #ccc;
+  border-bottom: 1px solid #444;
+  word-wrap: break-word; 
+}
+
+tr:nth-child(even) {
+  background-color: $color-bg-body;
+}
+
+tr:hover {
+  background-color: $color-input-focus-bg;
+  cursor: pointer;
+}
+
+td:focus, th:focus {
+  outline: none;
+  background-color: $color-bg-body;
+  color: #fff;
+  border: 1px solid #4CAF50;
+}
+
+.btn-error i
+{
+  font-size: 1rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  th, td {
+    font-size: 0.9rem; 
+    padding: 10px 5px;
+  }
+
+  table {
+    font-size: 0.9rem; 
+  }
+}
+

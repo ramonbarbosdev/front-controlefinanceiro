@@ -1,0 +1,37 @@
+<nav class="custom-navbar dark">
+  <div class="navbar-container">
+    <a class="navbar-brand" [routerLink]="['/admin/dashboard']">
+      <i class="bi bi-cloudy-fill"></i>
+      <span>Sistema</span>
+    </a>
+
+    <button class="navbar-toggle" (click)="menuAberto = !menuAberto">
+      ☰
+    </button>
+
+    <div class="navbar-links" [class.open]="menuAberto">
+      <ul>
+        <li>
+          <a [routerLink]="['/admin/conexao']">
+            <i class="bi bi-server"></i>
+            Conexão
+          </a>
+        </li>
+        <li>
+          <a href="#" (click)="sair()">
+            <i class="bi bi-box-arrow-left"></i>
+            Sair
+          </a>
+        </li>
+      </ul>
+      <form (submit)="buscar()">
+        <input type="text" placeholder="Buscar..." [(ngModel)]="termoBusca" name="search" />
+        <button type="submit">
+          <i class="bi bi-search"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<router-outlet />
