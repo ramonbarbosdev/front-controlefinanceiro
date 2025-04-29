@@ -1,26 +1,28 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { TipocontaService } from '../../../services/tipoconta.service';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Tipocategoria } from '../../../models/tipocategoria';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { InputTextComponent } from '../../component/input-text/input-text.component';
 import { ButtonComponent } from '../../component/button/button.component';
-import { Tipoconta } from '../../../models/tipoconta';
-import { Location } from '@angular/common';
+import { TipocategoriaService } from '../../../services/tipocategoria.service';
 
 @Component({
-  selector: 'app-tipocontaform',
-  imports: [InputTextComponent, RouterModule, ButtonComponent],
-  templateUrl: './tipocontaform.component.html',
-  styleUrl: './tipocontaform.component.scss',
+  selector: 'app-tipocategoriaform',
+  imports: [InputTextComponent, ButtonComponent],
+  templateUrl: './tipocategoriaform.component.html',
+  styleUrl: './tipocategoriaform.component.scss',
 })
-export class TipocontaformComponent {
-  public objeto: Tipoconta[] | any = [];
+export class TipocategoriaformComponent implements OnInit {
+  public objeto: Tipocategoria[] | any = [];
 
-  service = inject(TipocontaService);
+  service = inject(TipocategoriaService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   location = inject(Location);
-  nm_titulo = 'Tipo de Conta';
+  nm_titulo = 'Tipo de Categoria';
+  primaryKey = 'id_tipocategoria';
 
   ngOnInit() {
     const key = this.route.snapshot.paramMap.get('id');
@@ -38,6 +40,7 @@ export class TipocontaformComponent {
         this.objeto = res;
       },
       error: (err) => {
+        console.log(err);
         Swal.fire({
           icon: 'error',
           title: err.error.code,
@@ -51,7 +54,7 @@ export class TipocontaformComponent {
   obterSequencia() {
     this.service.sequencia().subscribe({
       next: (res: any) => {
-        this.objeto.cd_tipoconta = res;
+        this.objeto.cd_tipocategoria = res;
       },
       error: (err) => {
         Swal.fire({
@@ -65,12 +68,43 @@ export class TipocontaformComponent {
   }
 
   onSave() {
+    if (!this.objeto[this.primaryKey]) {
+      this.salvar();
+    } else {
+      this.atualizar();
+    }
+  }
+
+  salvar() {
     this.service.cadastrar(this.objeto).subscribe({
       next: (res: any) => {
         Swal.fire({
           icon: 'success',
           title: 'Sucesso',
-          text: 'Tipo de conta cadastrado com sucesso!',
+          text: 'Registro cadastrado com sucesso!',
+          confirmButtonText: 'OK',
+        });
+        this.onClose();
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: err.error.code,
+          text: err.error.error,
+          confirmButtonText: 'OK',
+        });
+      },
+    });
+  }
+
+  atualizar() {
+    console.log('atualizar');
+    this.service.atualizar(this.objeto).subscribe({
+      next: (res: any) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Sucesso',
+          text: 'Registro cadastrado com sucesso!',
           confirmButtonText: 'OK',
         });
         this.onClose();

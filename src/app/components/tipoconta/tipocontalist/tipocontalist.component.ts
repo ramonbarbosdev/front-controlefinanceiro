@@ -12,13 +12,15 @@ import Swal from 'sweetalert2';
   templateUrl: './tipocontalist.component.html',
   styleUrl: './tipocontalist.component.scss',
 })
-export class TipocontalistComponent implements OnInit {
+export class TipocontalistComponent implements OnInit
+{
   public objetos: Tipoconta[] | any = [];
 
   service = inject(TipocontaService);
   router = inject(Router);
   nm_titulo = 'Tipo de Conta';
   location = inject(Location);
+  primaryKey = 'id_tipoconta';
 
   ngOnInit()
   {
@@ -27,7 +29,7 @@ export class TipocontalistComponent implements OnInit {
 
   onClose()
   {
-    this.location.back();
+    this.router.navigate(['admin/dashboard']);
   }
 
   onReload()
@@ -39,16 +41,15 @@ export class TipocontalistComponent implements OnInit {
 
   onEdit(item: any)
   {
-    if (item) this.router.navigate(['admin/tipocontaform', item.id_tipoconta]);
+    if (item) this.router.navigate(['admin/tipocontaform', item[this.primaryKey]]);
   }
 
   onDelete(item: any)
   {
      if (item)
      {
-        this.service.deletar(item.id_tipoconta).subscribe( {
-          next: (res: any) =>
-          {
+        this.service.deletar(item[this.primaryKey]).subscribe({
+          next: (res: any) => {
             this.onReload();
           },
           error: (err) => {
@@ -60,8 +61,7 @@ export class TipocontalistComponent implements OnInit {
               confirmButtonText: 'OK',
             });
           },
-        }
-        );
+        });
      }
   }
 }

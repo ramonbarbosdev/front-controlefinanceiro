@@ -5,18 +5,25 @@ import { authGuard } from './auth/auth.guard';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TipocontaformComponent } from './components/tipoconta/tipocontaform/tipocontaform.component';
 import { TipocontalistComponent } from './components/tipoconta/tipocontalist/tipocontalist.component';
+import { TipocategorialistComponent } from './components/tipocategoria/tipocategorialist/tipocategorialist.component';
+import { TipocategoriaformComponent } from './components/tipocategoria/tipocategoriaform/tipocategoriaform.component';
 
 
 export const routes: Routes = [
-    {path: '', redirectTo: 'login', pathMatch: 'full'},
-    {path: 'login', component: LoginComponent},
-    {path: 'admin', component: PrincipalComponent, canActivateChild: [authGuard], children:
-        [
-            {path: 'dashboard', component: DashboardComponent},
-            {path: 'tipocontalist', component: TipocontalistComponent},
-            {path: 'tipocontaform/:id', component: TipocontaformComponent},
-            {path: 'tipocontaform', component: TipocontaformComponent},
-
-        ]
-    },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  {
+    path: 'admin',
+    component: PrincipalComponent,
+    canActivateChild: [authGuard],
+    children: [
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'tipocontalist', component: TipocontalistComponent },
+      { path: 'tipocontaform/:id', component: TipocontaformComponent },
+      { path: 'tipocontaform', component: TipocontaformComponent },
+      { path: 'tipocategorialist', component: TipocategorialistComponent },
+      { path: 'tipocategoriaform/:id', component: TipocategoriaformComponent },
+      { path: 'tipocategoriaform', component: TipocategoriaformComponent },
+    ],
+  },
 ];

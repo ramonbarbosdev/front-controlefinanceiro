@@ -1,0 +1,45 @@
+<div class="container">
+
+  <div class="card">
+
+   <div class="row">
+      <div class="col-btn">
+        <a (click)="onClose()">
+          <i class="bi bi-arrow-left-short"></i>
+        </a>
+        </div>
+        <div class="col-titulo">
+          <h3>{{nm_titulo}}</h3>
+        </div>
+    </div>
+
+
+    <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Codigo</th>
+        <th>Nome</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of objetos">
+        <td>{{ item.cd_tipocategoria }}</td>
+        <td>{{ item.nm_tipocategoria }}</td>
+        <td>
+          <a type="button" (click)="onEdit(item)" title="editar" class="btn-editar">
+            <i class="bi bi-pencil-square"></i>
+          </a>
+
+          <a (click)="onDelete(item)" class="btn-deletar">
+            <i class="bi bi-trash-fill"></i>
+          </a>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
