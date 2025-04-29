@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
 import Swal from 'sweetalert2';
 import { TipocontaService } from '../../../services/tipoconta.service';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { InputTextComponent } from '../../component/input-text/input-text.component';
 import { ButtonComponent } from '../../component/button/button.component';
+import { Tipoconta } from '../../../models/tipoconta';
 
 @Component({
   selector: 'app-tipocontaform',
@@ -12,19 +13,38 @@ import { ButtonComponent } from '../../component/button/button.component';
   styleUrl: './tipocontaform.component.scss',
 })
 export class TipocontaformComponent {
-  public objeto = {
-    cd_tipoconta: '',
-    nm_tipoconta: '',
-  };
+
+  public objeto: Tipoconta[] | any = [];
 
   service = inject(TipocontaService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   ngOnInit() {
     this.obterSequencia();
+    this.onEdit(this.route.snapshot.paramMap.get('id'));
   }
 
-  obterSequencia() {
+  onEdit(id: any)
+  {
+    console.log(id);
+     this.service.obterPorId(id).subscribe({
+       next: (res: any) => {
+         this.objeto = res;
+       },
+       error: (err) => {
+         Swal.fire({
+           icon: 'error',
+           title: err.error.code,
+           text: err.error.error,
+           confirmButtonText: 'OK',
+         });
+       },
+     });
+  }
+
+  obterSequencia()
+  {
     this.service.sequencia().subscribe({
       next: (res: any) => {
         this.objeto.cd_tipoconta = res;
@@ -40,25 +60,26 @@ export class TipocontaformComponent {
     });
   }
 
-  onSave() {
-    this.service.cadastrar(this.objeto).subscribe({
-      next: (res: any) => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Sucesso',
-          text: 'Tipo de conta cadastrado com sucesso!',
-          confirmButtonText: 'OK',
-        });
-        this.router.navigate(['admin/dashboard']);
-      },
-      error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: err.error.code,
-          text: err.error.error,
-          confirmButtonText: 'OK',
-        });
-      },
-    });
+  onSave()
+  {
+      this.service.cadastrar(this.objeto).subscribe({
+        next: (res: any) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Sucesso',
+            text: 'Tipo de conta cadastrado com sucesso!',
+            confirmButtonText: 'OK',
+          });
+          this.router.navigate(['admin/dashboard']);
+        },
+        error: (err) => {
+          Swal.fire({
+            icon: 'error',
+            title: err.error.code,
+            text: err.error.error,
+            confirmButtonText: 'OK',
+          });
+        },
+      });
   }
 }

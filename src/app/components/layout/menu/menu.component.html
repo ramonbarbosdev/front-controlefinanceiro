@@ -11,7 +11,7 @@
 
     <div class="navbar-links" [class.open]="menuAberto">
       <ul>
-       
+
 
         <li class="dropdown" (click)="dropdownAberto = !dropdownAberto" [class.active]="dropdownAberto">
           <a href="#" (click)="$event.preventDefault()">
@@ -19,7 +19,7 @@
             <i class="bi bi-caret-down-fill"></i>
           </a>
           <ul class="dropdown-menu" *ngIf="dropdownAberto">
-            <li><a [routerLink]="['/admin/tipoconta']"><i class="bi bi-life-preserver"></i> Tipo da conta</a></li>
+            <li><a [routerLink]="['/admin/tipocontalist']"><i class="bi bi-life-preserver"></i> Tipo da conta</a></li>
             <li><a href="#" (click)="sair()"><i class="bi bi-box-arrow-left"></i> Sair</a></li>
           </ul>
         </li>

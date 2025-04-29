@@ -4,6 +4,7 @@ import { PrincipalComponent } from './components/layout/principal/principal.comp
 import { authGuard } from './auth/auth.guard';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TipocontaformComponent } from './components/tipoconta/tipocontaform/tipocontaform.component';
+import { TipocontalistComponent } from './components/tipoconta/tipocontalist/tipocontalist.component';
 
 
 export const routes: Routes = [
@@ -12,7 +13,9 @@ export const routes: Routes = [
     {path: 'admin', component: PrincipalComponent, canActivateChild: [authGuard], children:
         [
             {path: 'dashboard', component: DashboardComponent},
-            {path: 'tipoconta', component: TipocontaformComponent},
+            {path: 'tipocontalist', component: TipocontalistComponent},
+            {path: 'tipocontaform/:id', component: TipocontaformComponent},
+            {path: 'tipocontaform', component: TipocontaformComponent},
 
         ]
     },

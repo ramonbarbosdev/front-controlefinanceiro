@@ -13,6 +13,23 @@ export class TipocontaService {
 
   constructor(private http: HttpClient) {}
 
+
+  obterTodos(): Observable<any> {
+    const url = `${this.apiUrl}/tipoconta/`;
+
+    return this.http
+      .get(url)
+      .pipe(catchError((error) => throwError(() => error)));
+  }
+
+  obterPorId(id: number): Observable<any> {
+    const url = `${this.apiUrl}/tipoconta/${id}`;
+    
+     return this.http
+       .get(url)
+       .pipe(catchError((error) => throwError(() => error)));
+  }
+
   cadastrar(data: any): Observable<any> {
     const url = `${this.apiUrl}/tipoconta/`;
 
