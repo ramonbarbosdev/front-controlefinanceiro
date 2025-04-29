@@ -2,37 +2,66 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { TipocontaService } from '../../../services/tipoconta.service';
 import { Tipoconta } from '../../../models/tipoconta';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { Location } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tipocontalist',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './tipocontalist.component.html',
   styleUrl: './tipocontalist.component.scss',
 })
 export class TipocontalistComponent implements OnInit {
-
   public objetos: Tipoconta[] | any = [];
 
   service = inject(TipocontaService);
   router = inject(Router);
+  nm_titulo = 'Tipo de Conta';
+  location = inject(Location);
 
-  ngOnInit() {
+  ngOnInit()
+  {
     this.onReload();
   }
 
-  onReload() {
+  onClose()
+  {
+    this.location.back();
+  }
+
+  onReload()
+  {
     this.service.obterTodos().subscribe((res) => {
-       this.objetos = res;
+      this.objetos = res;
     });
   }
 
   onEdit(item: any)
   {
-    if (item) this.router.navigate(
-      ['admin/tipocontaform', item.id_tipoconta]
-    );
+    if (item) this.router.navigate(['admin/tipocontaform', item.id_tipoconta]);
   }
 
-  deletar(id: number) {}
+  onDelete(item: any)
+  {
+     if (item)
+     {
+        this.service.deletar(item.id_tipoconta).subscribe( {
+          next: (res: any) =>
+          {
+            this.onReload();
+          },
+          error: (err) => {
+            console.log(err);
+            Swal.fire({
+              icon: 'error',
+              title: err.error.code,
+              text: err.error.error,
+              confirmButtonText: 'OK',
+            });
+          },
+        }
+        );
+     }
+  }
 }

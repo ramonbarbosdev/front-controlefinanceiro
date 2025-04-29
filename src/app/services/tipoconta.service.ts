@@ -24,7 +24,7 @@ export class TipocontaService {
 
   obterPorId(id: number): Observable<any> {
     const url = `${this.apiUrl}/tipoconta/${id}`;
-    
+
      return this.http
        .get(url)
        .pipe(catchError((error) => throwError(() => error)));
@@ -35,6 +35,14 @@ export class TipocontaService {
 
     return this.http
       .post(url, data)
+      .pipe(catchError((error) => throwError(() => error)));
+  }
+
+  deletar(id: any): Observable<any> {
+    const url = `${this.apiUrl}/tipoconta/${id}`;
+
+    return this.http
+      .delete(url)
       .pipe(catchError((error) => throwError(() => error)));
   }
 

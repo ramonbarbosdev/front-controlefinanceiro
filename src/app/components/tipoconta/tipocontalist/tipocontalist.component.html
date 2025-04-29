@@ -2,6 +2,18 @@
 
   <div class="card">
 
+   <div class="row">
+      <div class="col-btn">
+        <a (click)="onClose()">
+          <i class="bi bi-arrow-left-short"></i>
+        </a>
+        </div>
+        <div class="col-titulo">
+          <h3>{{nm_titulo}}</h3>
+        </div>
+    </div>
+
+
     <table class="custom-table">
     <thead>
       <tr>
@@ -15,17 +27,14 @@
         <td>{{ item.cd_tipoconta }}</td>
         <td>{{ item.nm_tipoconta }}</td>
         <td>
-          <button type="button" (click)="onEdit(item)" title="editar">
+          <a type="button" (click)="onEdit(item)" title="editar" class="btn-editar">
             <i class="bi bi-pencil-square"></i>
-          </button>
+          </a>
 
-
-          <!-- <button (click)="editar(item)" class="btn-editar">
-            <i class="bi bi-pencil-square"></i>
-          </button>
-          <button (click)="deletar(item.id)" class="btn-deletar">
+          <a (click)="onDelete(item)" class="btn-deletar">
             <i class="bi bi-trash-fill"></i>
-          </button> -->
+          </a>
+
         </td>
       </tr>
     </tbody>
