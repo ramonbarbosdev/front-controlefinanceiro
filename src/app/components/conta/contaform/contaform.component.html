@@ -1,1 +1,50 @@
-<p>contaform works!</p>
+<div class="container">
+  <div class="card">
+
+     <div class="row">
+      <div class="col-btn">
+        <a (click)="onClose()">
+          <i class="bi bi-arrow-left-short"></i>
+        </a>
+        </div>
+        <div class="col-titulo">
+          <h3>{{nm_titulo}}</h3>
+        </div>
+    </div>
+
+    <form action="">
+      <div class="row">
+        <div class="col-10">
+          <app-input-text
+          [label]="'Codigo'"
+          [inputId]="'cd_tipoconta'"
+          [(model)]="objeto.cd_conta"
+          [required]="true"
+        ></app-input-text>
+        </div>
+        <div class="col-80">
+          <app-input-text
+            [label]="'Nome'"
+            [inputId]="'nm_tipoconta'"
+            [(model)]="objeto.nm_conta"
+            [required]="true"
+          ></app-input-text>
+        </div>
+      </div>
+
+    </form>
+
+    <div class="row">
+        <app-button
+           [text]="'Salvar'"
+          [type]="'button'"
+          [icon]="'bi bi-box-arrow-in-right'"
+          [color]="''"
+          [backgroundColor]="''"
+          (clickEvent)="onSave()">
+        >
+        </app-button>
+    </div>
+
+  </div>
+</div>
