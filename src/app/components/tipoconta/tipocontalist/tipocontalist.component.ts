@@ -34,7 +34,8 @@ export class TipocontalistComponent implements OnInit
 
   onReload()
   {
-    this.service.obterTodos().subscribe((res) => {
+    this.service.obterTodos().subscribe((res) =>
+    {
       this.objetos = res;
     });
   }

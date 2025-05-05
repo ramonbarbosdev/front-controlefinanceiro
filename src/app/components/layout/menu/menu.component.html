@@ -11,7 +11,11 @@
 
     <div class="navbar-links" [class.open]="menuAberto">
       <ul>
-
+        <li>
+           <a href="#"  [routerLink]="['/admin/contalist']">
+            Conta
+          </a>
+        </li>
 
         <li class="dropdown" (click)="dropdownAberto = !dropdownAberto" [class.active]="dropdownAberto">
           <a href="#" (click)="$event.preventDefault()">
