@@ -23,7 +23,8 @@ export class ContalistComponent implements OnInit {
   primaryKey = 'id_conta';
   // location = inject(Location);
 
-  ngOnInit() {
+  ngOnInit()
+  {
     this.onReload();
   }
 
@@ -31,33 +32,36 @@ export class ContalistComponent implements OnInit {
     this.router.navigate(['admin/dashboard']);
   }
 
-  onReload() {
+  onReload()
+  {
     this.obterTodos();
   }
 
-  onEdit(item: any) {
-    // if (item)
-    //   this.router.navigate(['admin/tipocontaform', item[this.primaryKey]]);
+  onEdit(item: any)
+  {
+    if (item)this.router.navigate(['admin/contaform', item[this.primaryKey]]);
   }
 
-  onDelete(item: any) {
-    //  if (item)
-    //  {
-    //     this.service.deletar(item[this.primaryKey]).subscribe({
-    //       next: (res: any) => {
-    //         this.onReload();
-    //       },
-    //       error: (err) => {
-    //         console.log(err);
-    //         Swal.fire({
-    //           icon: 'error',
-    //           title: err.error.code,
-    //           text: err.error.error,
-    //           confirmButtonText: 'OK',
-    //         });
-    //       },
-    //     });
-    //  }
+  onDelete(item: any)
+  {
+     if (item)
+     {
+        this.service.deletar(item[this.primaryKey]).subscribe({
+          next: (res: any) =>
+          {
+            this.onReload();
+          },
+          error: (err) => {
+            console.log(err);
+            Swal.fire({
+              icon: 'error',
+              title: err.error.code,
+              text: err.error.error,
+              confirmButtonText: 'OK',
+            });
+          },
+        });
+     }
   }
 
   obterTodos() {
@@ -66,7 +70,6 @@ export class ContalistComponent implements OnInit {
         next: (dadosCompletos) =>
         {
           this.objetos = dadosCompletos;
-          console.log(this.objetos);
         },
         error: (err) => {
           Swal.fire({
