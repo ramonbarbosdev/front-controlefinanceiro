@@ -15,8 +15,9 @@ import { HeaderComponent } from "../../component/header/header.component";
   templateUrl: './tipocategoriaform.component.html',
   styleUrl: './tipocategoriaform.component.scss',
 })
-export class TipocategoriaformComponent implements OnInit {
-  public objeto: Tipocategoria[] | any = [];
+export class TipocategoriaformComponent implements OnInit
+{
+  public objeto: Tipocategoria = new Tipocategoria();
 
   service = inject(TipocategoriaService);
   private router = inject(Router);
@@ -72,54 +73,24 @@ export class TipocategoriaformComponent implements OnInit {
   }
 
   onSave() {
-    if (!this.objeto[this.primaryKey]) {
-      this.salvar();
-    } else {
-      this.atualizar();
-    }
-  }
-
-  salvar() {
-    this.service.cadastrar(this.objeto).subscribe({
-      next: (res: any) => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Sucesso',
-          text: 'Registro cadastrado com sucesso!',
-          confirmButtonText: 'OK',
-        });
-        this.onClose();
-      },
-      error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: err.error.code,
-          text: err.error.error,
-          confirmButtonText: 'OK',
-        });
-      },
-    });
-  }
-
-  atualizar() {
-    this.service.atualizar(this.objeto).subscribe({
-      next: (res: any) => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Sucesso',
-          text: 'Registro cadastrado com sucesso!',
-          confirmButtonText: 'OK',
-        });
-        this.onClose();
-      },
-      error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: err.error.code,
-          text: err.error.error,
-          confirmButtonText: 'OK',
-        });
-      },
-    });
-  }
+     this.service.cadastrar(this.objeto).subscribe({
+       next: (res: any) => {
+         Swal.fire({
+           icon: 'success',
+           title: 'Sucesso',
+           text: 'Tipo de conta cadastrado com sucesso!',
+           confirmButtonText: 'OK',
+         });
+         this.onClose();
+       },
+       error: (err) => {
+         Swal.fire({
+           icon: 'error',
+           title: err.error.code,
+           text: err.error.error,
+           confirmButtonText: 'OK',
+         });
+       },
+     });
+   }
 }
