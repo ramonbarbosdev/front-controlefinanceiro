@@ -32,6 +32,6 @@ export class MenuComponent {
   }
 
   buscar() {
-    console.log(this.termoBusca);
+    
   }
 }

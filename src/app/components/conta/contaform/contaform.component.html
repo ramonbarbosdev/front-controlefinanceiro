@@ -12,22 +12,49 @@
 
     <form action="">
       <div class="row">
-        <div class="col-10">
+        <div class="col-20">
           <app-input-text
-          [label]="'Codigo'"
+          [label]="'Codigo:'"
           [inputId]="'cd_tipoconta'"
           [(model)]="objeto.cd_conta"
           [required]="true"
         ></app-input-text>
         </div>
-        <div class="col-80">
+        <div class="col-70">
           <app-input-text
-            [label]="'Nome'"
+            [label]="'Nome:'"
             [inputId]="'nm_tipoconta'"
             [(model)]="objeto.nm_conta"
             [required]="true"
           ></app-input-text>
         </div>
+      </div>
+
+      <div class="row">
+          <div class="col-50">
+            <app-select
+             [label]="'Tipo da conta:'"
+            [inputId]="'id_tipoconta'"
+            [required]="true"
+            [(model)]="objeto.id_tipoconta"
+            [options]="objetoTipoConta"
+            [valueField]="'id_tipoconta'"
+            [labelField]="'nm_tipoconta'"
+            >
+            </app-select>
+          </div>
+          <div class="col-40">
+            <app-select
+             [label]="'Status da conta:'"
+              [inputId]="'id_statusconta'"
+              [required]="true"
+               [(model)]="objeto.id_statusconta"
+              [options]="objetoStatusConta"
+              [valueField]="'id_statusconta'"
+              [labelField]="'nm_statusconta'"
+            >
+            </app-select>
+          </div>
       </div>
 
     </form>

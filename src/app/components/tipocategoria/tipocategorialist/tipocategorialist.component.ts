@@ -53,7 +53,6 @@ export class TipocategorialistComponent {
           this.onReload();
         },
         error: (err) => {
-          console.log(err);
           Swal.fire({
             icon: 'error',
             title: err.error.code,

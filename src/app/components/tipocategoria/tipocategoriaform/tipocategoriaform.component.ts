@@ -45,7 +45,6 @@ export class TipocategoriaformComponent implements OnInit {
         this.objeto = res;
       },
       error: (err) => {
-        console.log(err);
         Swal.fire({
           icon: 'error',
           title: err.error.code,
@@ -103,7 +102,6 @@ export class TipocategoriaformComponent implements OnInit {
   }
 
   atualizar() {
-    console.log('atualizar');
     this.service.atualizar(this.objeto).subscribe({
       next: (res: any) => {
         Swal.fire({

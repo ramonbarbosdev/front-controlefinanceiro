@@ -1,6 +1,5 @@
 export class Tipoconta {
-
-  private id_tipoconta!: number;
-  private cd_tipoconta!: string;
-  private nm_tipoconta!: string;
+  public id_tipoconta!: number;
+  public cd_tipoconta!: string;
+  public nm_tipoconta!: string;
 }

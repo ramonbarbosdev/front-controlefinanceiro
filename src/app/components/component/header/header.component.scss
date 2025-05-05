@@ -35,18 +35,18 @@
 }
 
 .col-novo {
-  background-color: $color-button;
   width: 20%;
   display: flex;
   color: $color-text-main;
   justify-content: center;
   align-items: center;
-  border-radius: 15px;
 }
 
-.col-novo a {
+.col-novo a
+{
+  background-color: $color-button;
+  border-radius: 15px;
   padding: 5px;
-  background-color: transparent;
   border: none;
   border-radius: 8px;
   color: $color-text-main;

@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './select.component.html',
   styleUrl: './select.component.scss'
 })
-export class SelectComponent 
+export class SelectComponent
 {
   @Input() label!: string;
   @Input() inputId!: string;

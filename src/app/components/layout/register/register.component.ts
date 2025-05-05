@@ -3,7 +3,6 @@ import { InputTextComponent } from '../../component/input-text/input-text.compon
 import { InputPasswordComponent } from '../../component/input-password/input-password.component';
 import { ButtonComponent } from '../../component/button/button.component';
 import Swal from 'sweetalert2';
-import { exibirErro } from '../../../utils/swalMensagem.utils';
 import { AuthService } from '../../../auth/auth.service';
 import { Router, RouterModule } from '@angular/router';
 
@@ -41,8 +40,6 @@ export class RegisterComponent {
         this.router.navigate(['/login']);
       },
       error: (err) => {
-        console.log(err);
-        exibirErro(``, err);
       },
     });
   }

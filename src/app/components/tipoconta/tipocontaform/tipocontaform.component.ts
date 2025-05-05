@@ -15,7 +15,7 @@ import { HeaderComponent } from "../../component/header/header.component";
   styleUrl: './tipocontaform.component.scss',
 })
 export class TipocontaformComponent {
-  public objeto: Tipoconta[] | any = [];
+  public objeto: Tipoconta = new Tipoconta();
 
   service = inject(TipocontaService);
   private router = inject(Router);
