@@ -6,10 +6,11 @@ import { InputTextComponent } from '../../component/input-text/input-text.compon
 import { ButtonComponent } from '../../component/button/button.component';
 import { Tipoconta } from '../../../models/tipoconta';
 import { Location } from '@angular/common';
+import { HeaderComponent } from "../../component/header/header.component";
 
 @Component({
   selector: 'app-tipocontaform',
-  imports: [InputTextComponent, RouterModule, ButtonComponent],
+  imports: [InputTextComponent, RouterModule, ButtonComponent, HeaderComponent],
   templateUrl: './tipocontaform.component.html',
   styleUrl: './tipocontaform.component.scss',
 })
@@ -33,6 +34,8 @@ export class TipocontaformComponent {
   }
 
   onEdit(id: any) {
+    if (!id) return;
+
     this.service.obterPorId(id).subscribe({
       next: (res: any) => {
         this.objeto = res;

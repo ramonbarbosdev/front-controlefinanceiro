@@ -7,10 +7,11 @@ import { Location } from '@angular/common';
 import { InputTextComponent } from '../../component/input-text/input-text.component';
 import { ButtonComponent } from '../../component/button/button.component';
 import { TipocategoriaService } from '../../../services/tipocategoria.service';
+import { HeaderComponent } from "../../component/header/header.component";
 
 @Component({
   selector: 'app-tipocategoriaform',
-  imports: [InputTextComponent, ButtonComponent],
+  imports: [InputTextComponent, ButtonComponent, HeaderComponent],
   templateUrl: './tipocategoriaform.component.html',
   styleUrl: './tipocategoriaform.component.scss',
 })
@@ -34,7 +35,11 @@ export class TipocategoriaformComponent implements OnInit {
     this.location.back();
   }
 
-  onEdit(id: any) {
+
+
+  onEdit(id: any)
+  {
+    if(!id) return;
     this.service.obterPorId(id).subscribe({
       next: (res: any) => {
         this.objeto = res;

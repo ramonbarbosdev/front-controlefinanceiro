@@ -5,15 +5,15 @@ import { Tipoconta } from '../../../models/tipoconta';
 import { Router, RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
+import { HeaderComponent } from "../../component/header/header.component";
 
 @Component({
   selector: 'app-tipocontalist',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, HeaderComponent],
   templateUrl: './tipocontalist.component.html',
   styleUrl: './tipocontalist.component.scss',
 })
-export class TipocontalistComponent implements OnInit
-{
+export class TipocontalistComponent implements OnInit {
   public objetos: Tipoconta[] | any = [];
 
   service = inject(TipocontaService);
@@ -22,47 +22,46 @@ export class TipocontalistComponent implements OnInit
   location = inject(Location);
   primaryKey = 'id_tipoconta';
 
-  ngOnInit()
-  {
+  ngOnInit() {
     this.onReload();
   }
 
-  onClose()
-  {
+  onClose() {
     this.router.navigate(['admin/dashboard']);
   }
 
-  onReload()
+  onNew()
   {
-    this.service.obterTodos().subscribe((res) =>
-    {
+    this.router.navigate(['admin/tipocategoriaform']);
+  }
+
+  onReload() {
+    this.service.obterTodos().subscribe((res) => {
       this.objetos = res;
     });
   }
 
-  onEdit(item: any)
-  {
-    if (item) this.router.navigate(['admin/tipocontaform', item[this.primaryKey]]);
+  onEdit(item: any) {
+    if (item)
+      this.router.navigate(['admin/tipocontaform', item[this.primaryKey]]);
   }
 
-  onDelete(item: any)
-  {
-     if (item)
-     {
-        this.service.deletar(item[this.primaryKey]).subscribe({
-          next: (res: any) => {
-            this.onReload();
-          },
-          error: (err) => {
-            console.log(err);
-            Swal.fire({
-              icon: 'error',
-              title: err.error.code,
-              text: err.error.error,
-              confirmButtonText: 'OK',
-            });
-          },
-        });
-     }
+  onDelete(item: any) {
+    if (item) {
+      this.service.deletar(item[this.primaryKey]).subscribe({
+        next: (res: any) => {
+          this.onReload();
+        },
+        error: (err) => {
+          console.log(err);
+          Swal.fire({
+            icon: 'error',
+            title: err.error.code,
+            text: err.error.error,
+            confirmButtonText: 'OK',
+          });
+        },
+      });
+    }
   }
 }

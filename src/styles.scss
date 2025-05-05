@@ -3,7 +3,6 @@
 @import './styles/variaveis';
 @import './styles/table';
 //https: //akveo.github.io/nebular/docs/components/actions/overview#nbactionscomponent
-
 *
 {
     margin: 0;
@@ -118,46 +117,6 @@ html, body
 
 ::-webkit-scrollbar-thumb:hover {
   background: $color-button-hover;
-}
-
-
-
-// Cabeçalho
-.header
-{
-  display: flex;
-  flex-direction: row;
-}
-
-.col-btn
-{
-  width: 10%;
-}
-
-.col-btn a {
-  padding: 5px;
-  background-color: transparent;
-  border: none;
-  border-radius: 8px;
-  color:$color-text-main;
-  font-size: 2rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.col-btn a:hover:not(:disabled)
-{
-  color: $color-button-hover;
-}
-
-
-.col-titulo
-{
-  width: 86%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: $color-text-main;
 }
 
 

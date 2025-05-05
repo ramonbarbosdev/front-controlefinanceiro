@@ -2,17 +2,12 @@
 
   <div class="card">
 
-   <div class="row">
-      <div class="col-btn">
-        <a (click)="onClose()">
-          <i class="bi bi-arrow-left-short"></i>
-        </a>
-        </div>
-        <div class="col-titulo">
-          <h3>{{nm_titulo}}</h3>
-        </div>
-    </div>
-
+     <app-header
+      [titulo]="nm_titulo"
+      [form]="'tipocategoriaform'"
+      [fl_list]="true"
+      >
+     </app-header>
 
     <table class="custom-table">
     <thead>

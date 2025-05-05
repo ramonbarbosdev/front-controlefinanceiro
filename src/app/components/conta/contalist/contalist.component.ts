@@ -7,10 +7,11 @@ import { ContaService } from '../../../services/conta.service';
 import { TipocontaService } from '../../../services/tipoconta.service';
 import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
+import { HeaderComponent } from "../../component/header/header.component";
 
 @Component({
   selector: 'app-contalist',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, HeaderComponent],
   templateUrl: './contalist.component.html',
   styleUrl: './contalist.component.scss',
 })
@@ -21,54 +22,42 @@ export class ContalistComponent implements OnInit {
   service = inject(ContaService);
   router = inject(Router);
   primaryKey = 'id_conta';
-  // location = inject(Location);
 
-  ngOnInit()
-  {
+  ngOnInit() {
     this.onReload();
   }
 
-  onClose() {
-    this.router.navigate(['admin/dashboard']);
-  }
-
-  onReload()
-  {
+  onReload() {
     this.obterTodos();
   }
 
-  onEdit(item: any)
-  {
-    if (item)this.router.navigate(['admin/contaform', item[this.primaryKey]]);
+  onEdit(item: any) {
+    if (item) this.router.navigate(['admin/contaform', item[this.primaryKey]]);
   }
 
-  onDelete(item: any)
-  {
-     if (item)
-     {
-        this.service.deletar(item[this.primaryKey]).subscribe({
-          next: (res: any) =>
-          {
-            this.onReload();
-          },
-          error: (err) => {
-            console.log(err);
-            Swal.fire({
-              icon: 'error',
-              title: err.error.code,
-              text: err.error.error,
-              confirmButtonText: 'OK',
-            });
-          },
-        });
-     }
+  onDelete(item: any) {
+    if (item) {
+      this.service.deletar(item[this.primaryKey]).subscribe({
+        next: (res: any) => {
+          this.onReload();
+        },
+        error: (err) => {
+          console.log(err);
+          Swal.fire({
+            icon: 'error',
+            title: err.error.code,
+            text: err.error.error,
+            confirmButtonText: 'OK',
+          });
+        },
+      });
+    }
   }
 
   obterTodos() {
     this.service.obterTodos().subscribe((res) => {
       this.service.buscarDadosAdicionais(res).subscribe({
-        next: (dadosCompletos) =>
-        {
+        next: (dadosCompletos) => {
           this.objetos = dadosCompletos;
         },
         error: (err) => {

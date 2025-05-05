@@ -5,10 +5,11 @@ import { Router, RouterModule } from '@angular/router';
 import { Tipoconta } from '../../../models/tipoconta';
 import { CommonModule, Location } from '@angular/common';
 import { Tipocategoria } from '../../../models/tipocategoria';
+import { HeaderComponent } from "../../component/header/header.component";
 
 @Component({
   selector: 'app-tipocategorialist',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, HeaderComponent],
 
   templateUrl: './tipocategorialist.component.html',
   styleUrl: './tipocategorialist.component.scss',
@@ -28,6 +29,10 @@ export class TipocategorialistComponent {
 
   onClose() {
     this.router.navigate(['admin/dashboard']);
+  }
+
+  onNew() {
+    this.router.navigate(['admin/tipocategoriaform']);
   }
 
   onReload() {

@@ -6,10 +6,12 @@ import { Conta } from '../../../models/conta';
 import { ContaService } from '../../../services/conta.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
+import { DashboardComponent } from "../../dashboard/dashboard.component";
+import { HeaderComponent } from "../../component/header/header.component";
 
 @Component({
   selector: 'app-contaform',
-  imports: [InputTextComponent, RouterModule, ButtonComponent],
+  imports: [InputTextComponent, RouterModule, ButtonComponent, DashboardComponent, HeaderComponent],
   templateUrl: './contaform.component.html',
   styleUrl: './contaform.component.scss',
 })
@@ -28,24 +30,27 @@ export class ContaformComponent {
       if (!key) this.obterSequencia();
     }
 
-    onClose() {
+    onClose()
+    {
       this.location.back();
     }
 
-    onEdit(id: any) {
-      this.service.obterPorId(id).subscribe({
-        next: (res: any) => {
-          this.objeto = res;
-        },
-        error: (err) => {
-          Swal.fire({
-            icon: 'error',
-            title: err.error.code,
-            text: err.error.error,
-            confirmButtonText: 'OK',
-          });
-        },
-      });
+    onEdit(id: any)
+    {
+      if (!id) return;
+        this.service.obterPorId(id).subscribe({
+          next: (res: any) => {
+            this.objeto = res;
+          },
+          error: (err) => {
+            Swal.fire({
+              icon: 'error',
+              title: err.error.code,
+              text: err.error.error,
+              confirmButtonText: 'OK',
+            });
+          },
+        });
     }
 
     obterSequencia() {
