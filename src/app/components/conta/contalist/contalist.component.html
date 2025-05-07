@@ -16,6 +16,7 @@
         <th>Codigo</th>
         <th>Nome</th>
         <th>Tipo</th>
+        <th>Status</th>
         <th></th>
       </tr>
     </thead>
@@ -24,6 +25,7 @@
         <td>{{ item.cd_conta }}</td>
         <td>{{ item.nm_conta }}</td>
         <td>{{ item.nm_tipoconta }}</td>
+        <td>{{ item.nm_statusconta }}</td>
         <td>
           <a type="button" (click)="onEdit(item)" title="editar" class="btn-editar">
             <i class="bi bi-pencil-square"></i>

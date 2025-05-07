@@ -4,6 +4,7 @@ import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { TipocontaService } from './tipoconta.service';
+import { StatusContaService } from './status-conta.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ export class ContaService {
   private readonly apiUrl = `${environment.apiUrl}/conta`;
   private router = inject(Router);
   tipoContaService = inject(TipocontaService);
+  statusContaService = inject(StatusContaService);
 
   constructor(private http: HttpClient) {}
 
@@ -63,24 +65,26 @@ export class ContaService {
   }
 
   //Buscar dados que tem vinculo com a tabela
-  buscarDadosAdicionais(itens: any[])
-  {
+  buscarDadosAdicionais(itens: any[]) {
     const reqTipoConta = itens.map((item) =>
       this.tipoContaService.obterPorId(item.id_tipoconta)
     );
+    const reqStatusConta = itens.map((item) =>
+      this.statusContaService.obterPorId(item.id_statusconta)
+    );
 
-    return forkJoin([forkJoin(reqTipoConta),]).pipe(
-      map(
-        ([tiposConta]) => this.mapearDadosCompletos(itens, tiposConta)
+    return forkJoin([forkJoin(reqTipoConta), forkJoin(reqStatusConta)]).pipe(
+      map(([tiposConta, statusConta]) =>
+        this.mapearDadosCompletos(itens, tiposConta, statusConta)
       )
     );
   }
 
-  mapearDadosCompletos(itens: any[], tiposConta: any[]) {
-    return itens.map((item, index) => (
-    {
+  mapearDadosCompletos(itens: any[], tiposConta: any[], statusConta: any[]) {
+    return itens.map((item, index) => ({
       ...item,
       nm_tipoconta: tiposConta[index]?.nm_tipoconta,
+      nm_statusconta: statusConta[index]?.nm_statusconta,
     }));
   }
 }

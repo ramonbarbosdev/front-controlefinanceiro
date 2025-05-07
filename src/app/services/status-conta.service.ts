@@ -14,9 +14,16 @@ export class StatusContaService {
 
   constructor(private http: HttpClient) {}
 
-  obterTodos(): Observable<any>
-  {
+  obterTodos(): Observable<any> {
     const url = `${this.apiUrl}/`;
+
+    return this.http
+      .get(url)
+      .pipe(catchError((error) => throwError(() => error)));
+  }
+  
+  obterPorId(id: number): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
 
     return this.http
       .get(url)
