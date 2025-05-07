@@ -107,9 +107,10 @@ export class ContaformComponent {
         this.onClose();
       },
       error: (err) => {
+        console.log(err)
         Swal.fire({
           icon: 'error',
-          title: err.error.code,
+          title: "Erro ao salvar!",
           text: err.error.error,
           confirmButtonText: 'OK',
         });
