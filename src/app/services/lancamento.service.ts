@@ -1,15 +1,15 @@
-import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { catchError, forkJoin, map, Observable, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
-import { catchError, Observable, of, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { ContaService } from './conta.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TipocontaService {
-  private readonly apiUrl = `${environment.apiUrl}/tipoconta`;
-  private router = inject(Router);
+export class LancamentoService {
+  private readonly apiUrl = `${environment.apiUrl}/lancamento`;
 
   constructor(private http: HttpClient) {}
 
@@ -23,11 +23,10 @@ export class TipocontaService {
 
   obterPorId(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
-    if (id)
-    {
-      return this.http.get(url).pipe(catchError((error) => throwError(() => error)));
-    }
-    return of(false);
+
+    return this.http
+      .get(url)
+      .pipe(catchError((error) => throwError(() => error)));
   }
 
   cadastrar(data: any): Observable<any> {
@@ -35,6 +34,14 @@ export class TipocontaService {
 
     return this.http
       .post(url, data)
+      .pipe(catchError((error) => throwError(() => error)));
+  }
+
+  atualizar(data: any): Observable<any> {
+    const url = `${this.apiUrl}/`;
+
+    return this.http
+      .put(url, data)
       .pipe(catchError((error) => throwError(() => error)));
   }
 
@@ -52,4 +59,6 @@ export class TipocontaService {
       .get(url)
       .pipe(catchError((error) => throwError(() => error)));
   }
+
+  
 }

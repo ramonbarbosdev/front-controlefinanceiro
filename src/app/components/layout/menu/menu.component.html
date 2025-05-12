@@ -16,6 +16,11 @@
             Conta
           </a>
         </li>
+        <li>
+           <a href="#"  [routerLink]="['/admin/lancamentolist']">
+            Lancamento
+          </a>
+        </li>
 
         <li class="dropdown" (click)="dropdownAberto = !dropdownAberto" [class.active]="dropdownAberto">
           <a href="#" (click)="$event.preventDefault()">

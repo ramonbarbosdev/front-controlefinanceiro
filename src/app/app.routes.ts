@@ -9,6 +9,8 @@ import { TipocategorialistComponent } from './components/tipocategoria/tipocateg
 import { TipocategoriaformComponent } from './components/tipocategoria/tipocategoriaform/tipocategoriaform.component';
 import { ContalistComponent } from './components/conta/contalist/contalist.component';
 import { ContaformComponent } from './components/conta/contaform/contaform.component';
+import { LancamentolistComponent } from './components/lancamento/lancamentolist/lancamentolist.component';
+import { LancamentoformComponent } from './components/lancamento/lancamentoform/lancamentoform.component';
 
 
 export const routes: Routes = [
@@ -29,6 +31,9 @@ export const routes: Routes = [
       { path: 'contalist', component: ContalistComponent },
       { path: 'contaform', component: ContaformComponent },
       { path: 'contaform/:id', component: ContaformComponent },
+      { path: 'lancamentolist', component: LancamentolistComponent },
+      { path: 'lancamentoform', component: LancamentoformComponent },
+      { path: 'lancamentoform/:id', component: LancamentoformComponent },
     ],
   },
 ];

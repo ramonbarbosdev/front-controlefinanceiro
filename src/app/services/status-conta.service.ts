@@ -3,7 +3,7 @@ import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 import { TipocontaService } from './tipoconta.service';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,12 +21,14 @@ export class StatusContaService {
       .get(url)
       .pipe(catchError((error) => throwError(() => error)));
   }
-  
+
   obterPorId(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
 
-    return this.http
-      .get(url)
-      .pipe(catchError((error) => throwError(() => error)));
+     if (id)
+       {
+         return this.http.get(url).pipe(catchError((error) => throwError(() => error)));
+       }
+       return of(false);
   }
 }
