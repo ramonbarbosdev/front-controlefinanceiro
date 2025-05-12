@@ -1,0 +1,108 @@
+.card {
+  width: 650px;
+  background-color: $color-bg-container;
+  border-radius: 10px;
+  box-shadow: 0 0 9px 1px rgba(17, 17, 17, 0.62);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.002);
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  // Colunas dinâmicas com flex
+  .row .col-10 {
+    flex: 0 1 10%;
+  }
+
+  .row .col-20 {
+    flex: 0 1 20%;
+  }
+
+  .row .col-30 {
+    flex: 0 1 30%;
+  }
+
+  .row .col-40 {
+    flex: 0 1 40%;
+  }
+
+  .row .col-50 {
+    flex: 0 1 50%;
+  }
+
+  .row .col-60 {
+    flex: 0 1 60%;
+  }
+
+  .row .col-70 {
+    flex: 0 1 70%;
+  }
+
+  .row .col-80 {
+    flex: 0 1 80%;
+  }
+
+  .row .col-90 {
+    flex: 0 1 90%;
+  }
+
+  .row .col-100 {
+    flex: 0 1 100%;
+  }
+
+  .row .col-10,
+  .row .col-20,
+  .row .col-30,
+  .row .col-40,
+  .row .col-50,
+  .row .col-60,
+  .row .col-70,
+  .row .col-80,
+  .row .col-90,
+  .row .col-100 {
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    font-size: 1rem;
+    margin-bottom: 5px;
+    color: $color-text-main;
+  }
+
+  // Responsivo
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 15px;
+
+    .row {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .row .col-10,
+    .row .col-20,
+    .row .col-30,
+    .row .col-40,
+    .row .col-50,
+    .row .col-60,
+    .row .col-70,
+    .row .col-80,
+    .row .col-90,
+    .row .col-100 {
+      flex: 0 1 100%;
+    }
+  }
+}

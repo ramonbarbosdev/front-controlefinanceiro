@@ -1,1 +1,73 @@
-<p>lancamentoform works!</p>
+<div class="container">
+  <div class="card">
+
+
+
+     <app-header
+     [titulo]="nm_titulo"
+     [fl_list]="false"
+     >
+     </app-header>
+
+
+    <form action="">
+      <div class="row">
+        <div class="col-20">
+          <app-input-text
+          [label]="'Codigo:'"
+          [inputId]="'cd_lancamento'"
+          [(model)]="objeto.cd_lancamento"
+          [required]="true"
+        ></app-input-text>
+        </div>
+        <div class="col-30">
+          <app-select
+            [label]="'Conta:'"
+            [inputId]="'id_conta'"
+            [required]="true"
+            [(model)]="objeto.id_conta"
+            [options]="objetoConta"
+            [valueField]="'id_conta'"
+            [labelField]="'nm_conta'"
+          >
+         </app-select>
+        </div>
+        <div class="col-30">
+          <app-input-date
+          [label]="'Data:'"
+          [inputId]="'dt_lancamento'"
+          [(model)]="objeto.dt_lancamento"
+          [required]="true"
+          >
+          </app-input-date>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-100">
+          <app-input-textarea
+          [label]="'Descricao:'"
+          [inputId]="'ds_lancamento'"
+          [(model)]="objeto.ds_lancamento"
+          [required]="true"
+          >
+          </app-input-textarea>
+        </div>
+      </div>
+
+    </form>
+
+    <div class="row">
+        <app-button
+           [text]="'Salvar'"
+          [type]="'button'"
+          [icon]="'bi bi-box-arrow-in-right'"
+          [color]="''"
+          [backgroundColor]="''"
+          (clickEvent)="onSave()">
+        >
+        </app-button>
+    </div>
+
+  </div>
+</div>

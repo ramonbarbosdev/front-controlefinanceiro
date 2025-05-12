@@ -1,0 +1,13 @@
+<div class="input-group">
+  <label for="{{ inputId }}">{{ label }}</label>
+  <textarea
+    class="form-control"
+    id="{{ inputId }}"
+    name="{{ inputId }}"
+    [value]="model"
+    (input)="onInputChange($event)"
+    placeholder="{{ placeholder || 'Digite aqui...' }}"
+    [required]="required"
+    title="{{ placeholder || 'Digite aqui...' }}"
+  ></textarea>
+</div>

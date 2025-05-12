@@ -1,0 +1,14 @@
+<div class="input-group">
+  <label [for]="inputId">{{ label }}</label>
+  <input
+    title="texto"
+    class="form-control"
+    type= "date"
+    [id]="inputId"
+    [name]="inputId"
+    [value]="model ?? null"
+    (input)="onInputChange($event)"
+    [placeholder]="placeholder"
+    [required]="required"
+  />
+</div>

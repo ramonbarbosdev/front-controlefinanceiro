@@ -17,6 +17,7 @@ import { HeaderComponent } from "../../component/header/header.component";
 })
 export class ContalistComponent implements OnInit {
   nm_titulo = 'Conta';
+  componente = 'conta';
 
   public objetos: Conta[] | any = [];
   service = inject(ContaService);
@@ -32,7 +33,11 @@ export class ContalistComponent implements OnInit {
   }
 
   onEdit(item: any) {
-    if (item) this.router.navigate(['admin/contaform', item[this.primaryKey]]);
+    if (item)
+      this.router.navigate([
+        'admin/' + this.componente + 'form',
+        item[this.primaryKey],
+      ]);
   }
 
   onDelete(item: any) {

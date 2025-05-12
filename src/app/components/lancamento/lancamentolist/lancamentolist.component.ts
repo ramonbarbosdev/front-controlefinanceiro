@@ -17,6 +17,7 @@ import { HeaderComponent } from '../../component/header/header.component';
 })
 export class LancamentolistComponent {
   nm_titulo = 'Lancamento';
+  componente = 'lancamento';
 
   public objetos: Lancamento[] | any = [];
   service = inject(LancamentoService);
@@ -24,7 +25,7 @@ export class LancamentolistComponent {
   contaService = inject(ContaService);
 
   router = inject(Router);
-  primaryKey = 'id_conta';
+  primaryKey = 'id_lancamento';
 
   dadosAdicionais = [
     {
@@ -45,7 +46,10 @@ export class LancamentolistComponent {
 
   onEdit(item: any) {
     if (item)
-      this.router.navigate(['admin/lancamentoform', item[this.primaryKey]]);
+      this.router.navigate([
+        'admin/' + this.componente + 'form',
+        item[this.primaryKey],
+      ]);
   }
 
   onDelete(item: any) {
