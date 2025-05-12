@@ -44,6 +44,20 @@
       </div>
 
       <div class="row">
+        <div class="col-50">
+          <app-select
+            [label]="'Status:'"
+            [inputId]="'id_statuslancamento'"
+            [required]="true"
+            [(model)]="objeto.id_statuslancamento"
+            [options]="objetoStatus"
+            [valueField]="'id_statuslancamento'"
+            [labelField]="'ds_statuslancamento'"
+          ></app-select>
+        </div>
+      </div>
+
+      <div class="row">
         <div class="col-100">
           <app-input-textarea
           [label]="'Descricao:'"

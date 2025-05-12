@@ -1,14 +1,23 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, map, Observable } from 'rxjs';
+import { catchError, forkJoin, map, Observable, throwError } from 'rxjs';
+import { environment } from '../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
-export class BaseService
-{
+export class BaseService {
+  private readonly apiUrl = `${environment.apiUrl}`;
 
+  constructor(private http: HttpClient) {}
 
+  obterObjeto(map: string): Observable<any> {
+    const url = `${this.apiUrl}/${map}/`;
 
+    return this.http
+      .get(url)
+      .pipe(catchError((error) => throwError(() => error)));
+  }
 
   buscarDadosAdicionaisMulti<T>(
     itens: T[],

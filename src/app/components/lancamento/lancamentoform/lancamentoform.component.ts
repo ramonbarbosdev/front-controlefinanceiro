@@ -12,6 +12,8 @@ import { Conta } from '../../../models/conta';
 import { Location } from '@angular/common';
 import { InputTextareaComponent } from '../../component/input-textarea/input-textarea.component';
 import { InputDateComponent } from "../../component/input-date/input-date.component";
+import { Statuslancamento } from '../../../models/statuslancamento';
+import { BaseService } from '../../../services/base.service';
 
 @Component({
   selector: 'app-lancamentoform',
@@ -30,9 +32,10 @@ import { InputDateComponent } from "../../component/input-date/input-date.compon
 export class LancamentoformComponent {
   public objeto: Lancamento = new Lancamento();
   public objetoConta: Conta[] | any = [];
+  public objetoStatus: Statuslancamento[] | any = [];
 
   service = inject(LancamentoService);
-  contaService = inject(ContaService);
+  baseService = inject(BaseService);
 
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -47,6 +50,7 @@ export class LancamentoformComponent {
     const key = this.route.snapshot.paramMap.get('id');
 
     this.obterConta();
+    this.obterStatusLancamento();
 
     if (!key) {
       this.obterSequencia();
@@ -116,9 +120,18 @@ export class LancamentoformComponent {
   }
 
   obterConta() {
-    this.contaService.obterTodos().subscribe({
+    this.baseService.obterObjeto('conta').subscribe({
       next: (res: any) => {
         this.objetoConta = res;
+      },
+    });
+  }
+
+  obterStatusLancamento() {
+    this.baseService.obterObjeto('statuslancamento').subscribe({
+      next: (res: any) => {
+        console.log(res);
+        this.objetoStatus = res;
       },
     });
   }
