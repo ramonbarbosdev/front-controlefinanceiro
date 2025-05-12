@@ -9,11 +9,12 @@ import { LancamentoService } from '../../../services/lancamento.service';
 import { ContaService } from '../../../services/conta.service';
 import { Lancamento } from '../../../models/lancamento';
 import { Conta } from '../../../models/conta';
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { InputTextareaComponent } from '../../component/input-textarea/input-textarea.component';
 import { InputDateComponent } from "../../component/input-date/input-date.component";
 import { Statuslancamento } from '../../../models/statuslancamento';
 import { BaseService } from '../../../services/base.service';
+import { InputNumberComponent } from "../../component/input-number/input-number.component";
 
 @Component({
   selector: 'app-lancamentoform',
@@ -24,8 +25,10 @@ import { BaseService } from '../../../services/base.service';
     HeaderComponent,
     SelectComponent,
     InputTextareaComponent,
-    InputDateComponent
-],
+    InputDateComponent,
+    InputNumberComponent,
+    CommonModule,
+  ],
   templateUrl: './lancamentoform.component.html',
   styleUrl: './lancamentoform.component.scss',
 })
@@ -97,6 +100,7 @@ export class LancamentoformComponent {
   }
 
   onSave() {
+    console.log(this.objeto);
     this.service.cadastrar(this.objeto).subscribe({
       next: (res: any) => {
         Swal.fire({
@@ -130,11 +134,8 @@ export class LancamentoformComponent {
   obterStatusLancamento() {
     this.baseService.obterObjeto('statuslancamento').subscribe({
       next: (res: any) => {
-        console.log(res);
         this.objetoStatus = res;
       },
     });
   }
-
-
 }

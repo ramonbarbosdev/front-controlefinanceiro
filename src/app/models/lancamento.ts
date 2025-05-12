@@ -5,5 +5,5 @@ export class Lancamento {
   public dt_lancamento!: string;
   public id_conta!: number;
   public id_statuslancamento!: number;
-  public cl_lancamento!: number;
+  public vl_lancamento!: number;
 }

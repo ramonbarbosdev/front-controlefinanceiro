@@ -1,0 +1,14 @@
+<div class="input-group">
+  <label [for]="inputId">{{ label }}</label>
+  <input
+    title="valor"
+    class="form-control"
+    type="text"
+    [id]="inputId"
+    [name]="inputId"
+    [value]="valorFormatado"
+    (input)="onInputChange($event)"
+    [placeholder]="placeholder"
+    [required]="required"
+  />
+</div>

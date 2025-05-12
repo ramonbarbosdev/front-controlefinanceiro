@@ -44,7 +44,7 @@
       </div>
 
       <div class="row">
-        <div class="col-50">
+        <div class="col-40">
           <app-select
             [label]="'Status:'"
             [inputId]="'id_statuslancamento'"
@@ -54,6 +54,16 @@
             [valueField]="'id_statuslancamento'"
             [labelField]="'ds_statuslancamento'"
           ></app-select>
+        </div>
+        <div class="col-40">
+          <app-input-number
+          [label]="'Valor'"
+          [inputId]="'vl_lancamento'"
+          [(model)]="objeto.vl_lancamento"
+          [required]="true"
+          >
+
+          </app-input-number>
         </div>
       </div>
 
