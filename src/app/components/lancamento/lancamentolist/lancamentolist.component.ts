@@ -8,6 +8,8 @@ import { BaseService } from '../../../services/base.service';
 import { switchMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../component/header/header.component';
+import { Conta } from '../../../models/conta';
+import { Statuslancamento } from '../../../models/statuslancamento';
 
 @Component({
   selector: 'app-lancamentolist',
@@ -27,20 +29,10 @@ export class LancamentolistComponent {
   router = inject(Router);
   primaryKey = 'id_lancamento';
 
-  dadosAdicionais = [
-    {
-      campoId: 'id_conta',
-      campoResultado: 'nm_conta',
-      servico: (id: number) => this.contaService.obterPorId(id),
-      campoNome: 'nm_conta',
-    },
-    {
-      campoId: 'id_statuslancamento',
-      campoResultado: 'ds_statuslancamento',
-      servico: (id: number) => this.service.obterStatusLancamentoPorId(id),
-      campoNome: 'ds_statuslancamento',
-    },
-  ];
+  relacionadoObjeto = {
+    conta: [] as Conta[],
+    statuslancamento: [] as Statuslancamento[],
+  };
 
   ngOnInit() {
     this.onReload();
@@ -48,6 +40,8 @@ export class LancamentolistComponent {
 
   onReload() {
     this.obterTodos();
+    this.obterObjetoRelacionado('conta');
+    this.obterObjetoRelacionado('statuslancamento');
   }
 
   onEdit(item: any) {
@@ -76,17 +70,10 @@ export class LancamentolistComponent {
     }
   }
 
-  obterTodos() {
-    this.service
-      .obterTodos()
-      .pipe(
-        switchMap((res) =>
-          this.baseService.buscarDadosAdicionaisMulti(res, this.dadosAdicionais)
-        )
-      )
-      .subscribe({
-        next: (dadosCompletos) => {
-          this.objetos = dadosCompletos;
+   obterTodos() {
+      this.service.obterTodos().subscribe({
+        next: (res) => {
+          this.objetos = res;
         },
         error: (err) => {
           Swal.fire({
@@ -97,5 +84,27 @@ export class LancamentolistComponent {
           });
         },
       });
+    }
+
+  obterObjetoRelacionado(endpoint: string) {
+    this.baseService.obterObjeto(endpoint).subscribe({
+      next: (res: any) => {
+        (this.relacionadoObjeto as any)[endpoint] = res;
+      },
+    });
+  }
+
+  getNomeRelacionado(
+    campo: string,
+    id: number,
+    nomeCampoLista: string,
+    campoId: string,
+    campoNome: string
+  ): string {
+    const lista = (this.relacionadoObjeto as any)[nomeCampoLista];
+    console.log(lista);
+    return (
+      lista?.find((item: any) => item[campoId] === id)?.[campoNome] ?? '---'
+    );
   }
 }
