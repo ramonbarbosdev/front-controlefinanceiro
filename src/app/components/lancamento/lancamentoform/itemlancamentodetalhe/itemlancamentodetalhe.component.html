@@ -1,6 +1,6 @@
 
 <div class="row">
-  <h5>Item</h5>
+  <label >Item do Lançamento</label>
 </div>
 
 <div class="row">
@@ -58,13 +58,13 @@
 
 <div class="row">
   <app-button
-  [text]="indexEditando != null ? 'Atualizar' : 'Adicionar'"
-  [type]="'button'"
-  [icon]="'bi bi-plus-lg'"
-  [color]="''"
-  [backgroundColor]="''"
-  (clickEvent)="adicionarItem()">
-</app-button>
+      [text]="''"
+      [type]="'button'"
+      [icon]="indexEditando != null ? 'bi bi-pencil-square' : 'bi bi-plus-lg'"
+      [color]="''"
+      [backgroundColor]="''"
+      (clickEvent)="adicionarItem()">
+    </app-button>
 </div>
 
 
@@ -100,11 +100,13 @@
           </td>
           <td>{{ item.vl_movimento | currency:'BRL' }}</td>
           <td>
-            <button (click)="editarItem(i)">Editar</button>
-            <button (click)="removerItem(i)">Remover</button>
+            <a title="botao" class="btn-editar" (click)="editarItem(i)">  <i class="bi bi-pencil-square"></i></a>
+            <a title="botao" class="btn-deletar" (click)="removerItem(i)"> <i class="bi bi-trash-fill"></i></a>
           </td>
         </tr>
       </tbody>
     </table>
+
+
   </div>
 </div>

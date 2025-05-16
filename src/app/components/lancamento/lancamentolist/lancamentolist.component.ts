@@ -102,7 +102,6 @@ export class LancamentolistComponent {
     campoNome: string
   ): string {
     const lista = (this.relacionadoObjeto as any)[nomeCampoLista];
-    console.log(lista);
     return (
       lista?.find((item: any) => item[campoId] === id)?.[campoNome] ?? '---'
     );

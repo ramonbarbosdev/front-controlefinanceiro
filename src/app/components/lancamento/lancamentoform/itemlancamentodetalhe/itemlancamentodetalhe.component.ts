@@ -29,6 +29,17 @@ export class ItemlancamentodetalheComponent {
 
   indexEditando: number | null = null;
 
+
+  limparCampos()
+  {
+    this.itemTemp = {
+      id_categoria: null,
+      id_metodopagamento: null,
+      id_tipooperacao: null,
+      vl_movimento: null,
+    };
+  }
+
   atualizarValor(valorAtualizado: any) {
     this.objeto = valorAtualizado;
     this.objetoChange.emit(this.objeto);
@@ -62,12 +73,7 @@ export class ItemlancamentodetalheComponent {
       this.objeto[this.nomeItem].push({ ...this.itemTemp });
     }
 
-    this.itemTemp = {
-      id_categoria: null,
-      id_metodopagamento: null,
-      id_tipooperacao: null,
-      vl_movimento: null,
-    };
+    this.limparCampos();
 
     this.objetoChange.emit(this.objeto);
   }
@@ -77,7 +83,9 @@ export class ItemlancamentodetalheComponent {
     this.itemTemp = { ...this.objeto[this.nomeItem][index] };
   }
 
-  removerItem(index: number) {
+  removerItem(index: number)
+  {
+    this.limparCampos();
     this.objeto[this.nomeItem].splice(index, 1);
     this.objetoChange.emit(this.objeto);
   }
