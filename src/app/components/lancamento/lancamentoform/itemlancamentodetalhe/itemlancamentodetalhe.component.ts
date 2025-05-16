@@ -1,14 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, input, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, input, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from "../../../component/button/button.component";
 import Swal from 'sweetalert2';
 import { SelectComponent } from "../../../component/select/select.component";
 import { InputNumberComponent } from "../../../component/input-number/input-number.component";
+import { BaseService } from '../../../../services/base.service';
 
 @Component({
   selector: 'app-itemlancamentodetalhe',
-  imports: [CommonModule, FormsModule, ButtonComponent, SelectComponent, InputNumberComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ButtonComponent,
+    SelectComponent,
+    InputNumberComponent,
+  ],
   templateUrl: './itemlancamentodetalhe.component.html',
   styleUrl: './itemlancamentodetalhe.component.scss',
 })
@@ -73,5 +80,18 @@ export class ItemlancamentodetalheComponent {
   removerItem(index: number) {
     this.objeto[this.nomeItem].splice(index, 1);
     this.objetoChange.emit(this.objeto);
+  }
+
+  getNomeRelacionado(
+    campo: string,
+    id: number,
+    nomeCampoLista: string,
+    campoId: string,
+    campoNome: string
+  ): string {
+    const lista = this.relacionado?.[nomeCampoLista];
+    return (
+      lista?.find((item: any) => item[campoId] === id)?.[campoNome] ?? '---'
+    );
   }
 }
