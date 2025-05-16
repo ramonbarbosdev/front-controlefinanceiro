@@ -26,12 +26,12 @@
         <td>{{ item.cd_lancamento }}</td>
         <td>
           {{
-            getNomeRelacionado('id_conta', item.id_conta, 'conta', 'id_conta', 'nm_conta')
+            this.baseService.getNomeRelacionado('id_conta', item.id_conta, 'conta', 'id_conta', 'nm_conta', this.relacionadoObjeto)
           }}
         </td>
         <td>
           {{
-            getNomeRelacionado('id_statuslancamento', item.id_statuslancamento, 'statuslancamento', 'id_statuslancamento', 'ds_statuslancamento')
+            this.baseService.getNomeRelacionado('id_statuslancamento', item.id_statuslancamento, 'statuslancamento', 'id_statuslancamento', 'ds_statuslancamento',  this.relacionadoObjeto)
           }}
         </td>
         <td>{{ item.ds_lancamento }}</td>

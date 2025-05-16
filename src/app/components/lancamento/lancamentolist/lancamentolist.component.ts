@@ -29,10 +29,7 @@ export class LancamentolistComponent {
   router = inject(Router);
   primaryKey = 'id_lancamento';
 
-  relacionadoObjeto = {
-    conta: [] as Conta[],
-    statuslancamento: [] as Statuslancamento[],
-  };
+  relacionadoObjeto = this.service.relacionadoObjeto;
 
   ngOnInit() {
     this.onReload();
@@ -40,8 +37,6 @@ export class LancamentolistComponent {
 
   onReload() {
     this.obterTodos();
-    this.obterObjetoRelacionado('conta');
-    this.obterObjetoRelacionado('statuslancamento');
   }
 
   onEdit(item: any) {
@@ -70,40 +65,25 @@ export class LancamentolistComponent {
     }
   }
 
-   obterTodos() {
-      this.service.obterTodos().subscribe({
-        next: (res) => {
-          this.objetos = res;
-        },
-        error: (err) => {
-          Swal.fire({
-            icon: 'error',
-            title: err.error?.code || 'Erro',
-            text: err.error?.error || 'Erro ao buscar dados adicionais',
-            confirmButtonText: 'OK',
-          });
-        },
-      });
-    }
+  obterTodos()
+  {
+    this.baseService.obterObjetoRelacionado('conta', this.relacionadoObjeto);
+    this.baseService.obterObjetoRelacionado('statuslancamento', this.relacionadoObjeto);
 
-  obterObjetoRelacionado(endpoint: string) {
-    this.baseService.obterObjeto(endpoint).subscribe({
-      next: (res: any) => {
-        (this.relacionadoObjeto as any)[endpoint] = res;
+    this.service.obterTodos().subscribe({
+      next: (res) => {
+        this.objetos = res;
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: err.error?.code || 'Erro',
+          text: err.error?.error || 'Erro ao buscar dados adicionais',
+          confirmButtonText: 'OK',
+        });
       },
     });
   }
 
-  getNomeRelacionado(
-    campo: string,
-    id: number,
-    nomeCampoLista: string,
-    campoId: string,
-    campoNome: string
-  ): string {
-    const lista = (this.relacionadoObjeto as any)[nomeCampoLista];
-    return (
-      lista?.find((item: any) => item[campoId] === id)?.[campoNome] ?? '---'
-    );
-  }
+
 }

@@ -4,6 +4,9 @@ import { catchError, forkJoin, map, Observable, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ContaService } from './conta.service';
+import { Conta } from '../models/conta';
+import { Statuslancamento } from '../models/statuslancamento';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +15,13 @@ export class LancamentoService {
   private readonly apiUrl = `${environment.apiUrl}/lancamento`;
 
   constructor(private http: HttpClient) {}
+
+  relacionadoObjeto = {
+    conta: [] as Conta[],
+    statuslancamento: [] as Statuslancamento[],
+  };
+
+  baseService = inject(BaseService);
 
   obterTodos(): Observable<any> {
     const url = `${this.apiUrl}/`;

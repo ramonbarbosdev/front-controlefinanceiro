@@ -11,6 +11,28 @@ export class BaseService {
 
   constructor(private http: HttpClient) {}
 
+  obterObjetoRelacionado(endpoint: string, relacionadoObjeto: any) {
+    this.obterObjeto(endpoint).subscribe({
+      next: (res: any) => {
+        return ((relacionadoObjeto as any)[endpoint] = res);
+      },
+    });
+  }
+
+  getNomeRelacionado(
+    campo: string,
+    id: number,
+    nomeCampoLista: string,
+    campoId: string,
+    campoNome: string,
+    relacionadoObjeto: any
+  ): string {
+    const lista = (relacionadoObjeto as any)[nomeCampoLista];
+    return (
+      lista?.find((item: any) => item[campoId] === id)?.[campoNome] ?? '---'
+    );
+  }
+
   obterObjeto(map: string): Observable<any> {
     const url = `${this.apiUrl}/${map}/`;
 

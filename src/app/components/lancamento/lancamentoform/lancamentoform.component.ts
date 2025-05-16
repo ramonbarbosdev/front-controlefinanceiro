@@ -69,8 +69,8 @@ export class LancamentoformComponent {
   onShow() {
     const key = this.route.snapshot.paramMap.get('id');
 
-    this.obterObjetoRelacionado('conta');
-    this.obterObjetoRelacionado('statuslancamento');
+    this.baseService.obterObjetoRelacionado('conta', this.relacionadoObjeto);
+    this.baseService.obterObjetoRelacionado('statuslancamento', this.relacionadoObjeto);
     this.obterObjetoRelacionadoItem('categoria');
     this.obterObjetoRelacionadoItem('metodopagamento');
     this.obterObjetoRelacionadoItem('tipooperacao');
@@ -142,14 +142,6 @@ export class LancamentoformComponent {
           text: err.error.error,
           confirmButtonText: 'OK',
         });
-      },
-    });
-  }
-
-  obterObjetoRelacionado(endpoint: string) {
-    this.baseService.obterObjeto(endpoint).subscribe({
-      next: (res: any) => {
-        (this.relacionadoObjeto as any)[endpoint] = res;
       },
     });
   }
