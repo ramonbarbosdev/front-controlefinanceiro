@@ -41,10 +41,6 @@ import { formatarDataParaInput } from '../../../utils/formatarDataParaInput';
 })
 export class LancamentoformComponent {
   public objeto: Lancamento = new Lancamento();
-  relacionadoObjeto = {
-    conta: [] as Conta[],
-    statuslancamento: [] as Statuslancamento[],
-  };
 
   service = inject(LancamentoService);
   baseService = inject(BaseService);
@@ -53,6 +49,8 @@ export class LancamentoformComponent {
   private route = inject(ActivatedRoute);
   location = inject(Location);
   nm_titulo = 'Cadastrar Lançamento';
+
+  relacionadoObjeto = this.service.relacionadoObjeto;
 
   //item
   public objetoItemLancamento: Itemlancamento = new Itemlancamento();
@@ -70,7 +68,10 @@ export class LancamentoformComponent {
     const key = this.route.snapshot.paramMap.get('id');
 
     this.baseService.obterObjetoRelacionado('conta', this.relacionadoObjeto);
-    this.baseService.obterObjetoRelacionado('statuslancamento', this.relacionadoObjeto);
+    this.baseService.obterObjetoRelacionado(
+      'statuslancamento',
+      this.relacionadoObjeto
+    );
     this.obterObjetoRelacionadoItem('categoria');
     this.obterObjetoRelacionadoItem('metodopagamento');
     this.obterObjetoRelacionadoItem('tipooperacao');
