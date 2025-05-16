@@ -20,6 +20,7 @@ import { ItemlancamentodetalheComponent } from "./itemlancamentodetalhe/itemlanc
 import { Categoria } from '../../../models/categoria';
 import { Metodopagamento } from '../../../models/metodopagamento';
 import { Tipooperacao } from '../../../models/tipooperacao';
+import { formatarDataParaInput } from '../../../utils/formatarDataParaInput';
 
 @Component({
   selector: 'app-lancamentoform',
@@ -87,8 +88,11 @@ export class LancamentoformComponent {
 
   onEdit(id: any) {
     if (!id) return;
+
     this.service.obterPorId(id).subscribe({
       next: (res: any) => {
+        res.dt_lancamento = formatarDataParaInput(res.dt_lancamento);
+        console.log(res);
         this.objeto = res;
       },
       error: (err) => {

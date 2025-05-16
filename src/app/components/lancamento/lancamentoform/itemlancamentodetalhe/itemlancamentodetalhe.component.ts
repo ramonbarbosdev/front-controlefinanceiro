@@ -46,11 +46,11 @@ export class ItemlancamentodetalheComponent {
   }
 
   adicionarItem() {
-    const { id_categoria, id_metodopagamento, id_tipooperacao, vl_movimento } =
+    const { id_metodopagamento, id_tipooperacao, vl_movimento } =
       this.itemTemp || {};
 
     if (
-      !id_categoria ||
+
       !id_metodopagamento ||
       !id_tipooperacao ||
       !vl_movimento
@@ -99,7 +99,7 @@ export class ItemlancamentodetalheComponent {
   ): string {
     const lista = this.relacionado?.[nomeCampoLista];
     return (
-      lista?.find((item: any) => item[campoId] === id)?.[campoNome] ?? '---'
+      lista?.find((item: any) => item[campoId] === id)?.[campoNome] ?? ''
     );
   }
 }

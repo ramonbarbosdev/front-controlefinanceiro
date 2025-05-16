@@ -35,7 +35,7 @@
           }}
         </td>
         <td>{{ item.ds_lancamento }}</td>
-        <td>{{ item.vl_lancamento }}</td>
+        <td>{{ item.vl_lancamento | currency:'BRL' }}</td>
         <td>
           <a type="button" (click)="onEdit(item)" title="editar" class="btn-editar">
             <i class="bi bi-pencil-square"></i>
