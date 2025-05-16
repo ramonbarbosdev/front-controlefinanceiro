@@ -1,0 +1,98 @@
+
+<div class="row">
+  <h5>Item</h5>
+</div>
+
+<div class="row">
+
+  <div class="col-40">
+    <app-select
+      [label]="'Categoria:'"
+      [inputId]="'id_categoria'"
+      [required]="true"
+      [(model)]="itemTemp.id_categoria"
+      [options]="relacionado.categoria"
+      [valueField]="'id_categoria'"
+      [labelField]="'nm_categoria'"
+    >
+    </app-select>
+  </div>
+  <div class="col-40">
+    <app-select
+      [label]="'Metodo:'"
+      [inputId]="'id_metodopagamento'"
+      [required]="true"
+      [(model)]="itemTemp.id_metodopagamento"
+      [options]="relacionado.metodopagamento"
+      [valueField]="'id_metodopagamento'"
+      [labelField]="'ds_metodopagamento'"
+    >
+  </app-select>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-40">
+    <app-select
+      [label]="'Operacao:'"
+      [inputId]="'id_tipooperacao'"
+      [required]="true"
+      [(model)]="itemTemp.id_tipooperacao"
+      [options]="relacionado.tipooperacao"
+      [valueField]="'id_tipooperacao'"
+      [labelField]="'ds_tipooperacao'"
+    >
+</app-select>
+  </div>
+  <div class="col-40">
+    <app-input-number
+      [label]="'Valor'"
+      [inputId]="'vl_movimento'"
+      [(model)]="itemTemp.vl_movimento"
+      [required]="true"
+      >
+    </app-input-number>
+  </div>
+</div>
+
+<div class="row">
+  <app-button
+  [text]="indexEditando != null ? 'Atualizar' : 'Adicionar'"
+  [type]="'button'"
+  [icon]="'bi bi-plus-lg'"
+  [color]="''"
+  [backgroundColor]="''"
+  (clickEvent)="adicionarItem()">
+</app-button>
+</div>
+
+
+<div class="row">
+  <div class="col-100">
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Categoria</th>
+          <th>Metodo</th>
+          <th>Operação</th>
+          <th>Valor</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of objeto[nomeItem]; let i = index">
+          <td>{{ item.id_categoria }}</td>
+          <td>{{ item.id_metodopagamento }}</td>
+          <td>{{ item.id_tipooperacao }}</td>
+          <td>{{ item.vl_movimento | currency:'BRL' }}</td>
+          <td>
+            <button (click)="editarItem(i)">Editar</button>
+            <button (click)="removerItem(i)">Remover</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -15,6 +15,11 @@ import { InputDateComponent } from "../../component/input-date/input-date.compon
 import { Statuslancamento } from '../../../models/statuslancamento';
 import { BaseService } from '../../../services/base.service';
 import { InputNumberComponent } from "../../component/input-number/input-number.component";
+import { Itemlancamento } from '../../../models/itemlancamento';
+import { ItemlancamentodetalheComponent } from "./itemlancamentodetalhe/itemlancamentodetalhe.component";
+import { Categoria } from '../../../models/categoria';
+import { Metodopagamento } from '../../../models/metodopagamento';
+import { Tipooperacao } from '../../../models/tipooperacao';
 
 @Component({
   selector: 'app-lancamentoform',
@@ -28,14 +33,17 @@ import { InputNumberComponent } from "../../component/input-number/input-number.
     InputDateComponent,
     InputNumberComponent,
     CommonModule,
+    ItemlancamentodetalheComponent,
   ],
   templateUrl: './lancamentoform.component.html',
   styleUrl: './lancamentoform.component.scss',
 })
 export class LancamentoformComponent {
   public objeto: Lancamento = new Lancamento();
-  public objetoConta: Conta[] | any = [];
-  public objetoStatus: Statuslancamento[] | any = [];
+  relacionadoObjeto = {
+    conta: [] as Conta[],
+    statuslancamento: [] as Statuslancamento[],
+  };
 
   service = inject(LancamentoService);
   baseService = inject(BaseService);
@@ -45,6 +53,14 @@ export class LancamentoformComponent {
   location = inject(Location);
   nm_titulo = 'Cadastrar Lançamento';
 
+  //item
+  public objetoItemLancamento: Itemlancamento = new Itemlancamento();
+  relacionado = {
+    categoria: [] as Categoria[],
+    metodopagamento: [] as Metodopagamento[],
+    tipooperacao: [] as Tipooperacao[],
+  };
+
   ngOnInit() {
     this.onShow();
   }
@@ -52,8 +68,11 @@ export class LancamentoformComponent {
   onShow() {
     const key = this.route.snapshot.paramMap.get('id');
 
-    this.obterConta();
-    this.obterStatusLancamento();
+    this.obterObjetoRelacionado('conta');
+    this.obterObjetoRelacionado('statuslancamento');
+    this.obterObjetoRelacionadoItem('categoria');
+    this.obterObjetoRelacionadoItem('metodopagamento');
+    this.obterObjetoRelacionadoItem('tipooperacao');
 
     if (!key) {
       this.obterSequencia();
@@ -123,18 +142,26 @@ export class LancamentoformComponent {
     });
   }
 
-  obterConta() {
-    this.baseService.obterObjeto('conta').subscribe({
+  obterObjetoRelacionado(endpoint: string) {
+    this.baseService.obterObjeto(endpoint).subscribe({
       next: (res: any) => {
-        this.objetoConta = res;
+        (this.relacionadoObjeto as any)[endpoint] = res;
       },
     });
   }
 
-  obterStatusLancamento() {
-    this.baseService.obterObjeto('statuslancamento').subscribe({
+  obterObjetoRelacionadoItem(endpoint: string) {
+    this.baseService.obterObjeto(endpoint).subscribe({
       next: (res: any) => {
-        this.objetoStatus = res;
+        (this.relacionado as any)[endpoint] = res;
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro ao consultar relacionamento!',
+          text: err.error.error,
+          confirmButtonText: 'OK',
+        });
       },
     });
   }
