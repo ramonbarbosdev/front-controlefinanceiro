@@ -30,7 +30,7 @@ export class LancamentoService {
   }
 
   cadastrar(data: any): Observable<any> {
-    const url = `${this.apiUrl}/`;
+    const url = `${this.apiUrl}/cadastrar/`;
 
     return this.http
       .post(url, data)
@@ -60,5 +60,11 @@ export class LancamentoService {
       .pipe(catchError((error) => throwError(() => error)));
   }
 
- 
+  obterStatusLancamentoPorId(id: number): Observable<any> {
+    const url = `${environment.apiUrl}/statuslancamento/${id}`;
+
+    return this.http
+      .get(url)
+      .pipe(catchError((error) => throwError(() => error)));
+  }
 }

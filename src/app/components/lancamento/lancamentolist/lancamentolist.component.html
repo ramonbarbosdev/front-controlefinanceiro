@@ -16,6 +16,7 @@
         <th>Codigo</th>
         <th>Descrição</th>
         <th>Conta</th>
+        <th>Status</th>
         <th>Valor</th>
         <th></th>
       </tr>
@@ -25,6 +26,7 @@
         <td>{{ item.cd_lancamento }}</td>
         <td>{{ item.ds_lancamento }}</td>
         <td>{{ item.nm_conta }}</td>
+        <td>{{ item.ds_statuslancamento }}</td>
         <td>{{ item.vl_lancamento }}</td>
         <td>
           <a type="button" (click)="onEdit(item)" title="editar" class="btn-editar">

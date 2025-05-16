@@ -34,6 +34,12 @@ export class LancamentolistComponent {
       servico: (id: number) => this.contaService.obterPorId(id),
       campoNome: 'nm_conta',
     },
+    {
+      campoId: 'id_statuslancamento',
+      campoResultado: 'ds_statuslancamento',
+      servico: (id: number) => this.service.obterStatusLancamentoPorId(id),
+      campoNome: 'ds_statuslancamento',
+    },
   ];
 
   ngOnInit() {
