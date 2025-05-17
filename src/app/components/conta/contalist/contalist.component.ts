@@ -18,7 +18,7 @@ import { BaseService } from '../../../services/base.service';
 })
 export class ContalistComponent implements OnInit {
   nm_titulo = 'Conta';
-  componente = 'conta';
+  endpoint = 'conta';
 
   public objetos: Conta[] | any = [];
   service = inject(ContaService);
@@ -39,14 +39,14 @@ export class ContalistComponent implements OnInit {
   onEdit(item: any) {
     if (item)
       this.router.navigate([
-        'admin/' + this.componente + 'form',
+        'admin/' + this.endpoint + 'form',
         item[this.primaryKey],
       ]);
   }
 
   onDelete(item: any) {
     if (item) {
-      this.service.deletar(item[this.primaryKey]).subscribe({
+      this.baseService.deletar(this.endpoint, item[this.primaryKey]).subscribe({
         next: (res: any) => {
           this.onReload();
         },
@@ -63,10 +63,16 @@ export class ContalistComponent implements OnInit {
   }
 
   obterTodos() {
-    this.baseService.obterObjetoRelacionado('tipoconta', this.relacionadoObjeto);
-    this.baseService.obterObjetoRelacionado('statusconta', this.relacionadoObjeto);
+    this.baseService.obterObjetoRelacionado(
+      'tipoconta',
+      this.relacionadoObjeto
+    );
+    this.baseService.obterObjetoRelacionado(
+      'statusconta',
+      this.relacionadoObjeto
+    );
 
-    this.service.obterTodos().subscribe({
+    this.baseService.obterTodos(this.endpoint).subscribe({
       next: (res) => {
         this.objetos = res;
       },

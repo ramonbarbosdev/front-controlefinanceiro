@@ -1,1 +1,47 @@
-<p>categorialist works!</p>
+<div class="container">
+
+  <div class="card">
+
+    <app-header
+    [titulo]="nm_titulo"
+    [form]="endpoint+'form'"
+    [fl_list]="true"
+    >
+    </app-header>
+
+
+    <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Codigo</th>
+        <th>Nome</th>
+        <th>Tipo</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of objetos">
+        <td>{{ item.cd_categoria }}</td>
+        <td>{{ item.nm_categoria }}</td>
+        <td>
+          {{
+            this.baseService.getNomeRelacionado('id_tipocategoria', item.id_tipocategoria, 'tipocategoria', 'id_tipocategoria', 'nm_tipocategoria',  this.relacionadoObjeto)
+          }}
+        </td>
+        <td>
+          <a type="button" (click)="onEdit(item)" title="editar" class="btn-editar">
+            <i class="bi bi-pencil-square"></i>
+          </a>
+
+          <a (click)="onDelete(item)" class="btn-deletar">
+            <i class="bi bi-trash-fill"></i>
+          </a>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
