@@ -41,34 +41,50 @@ export class BaseService {
       .pipe(catchError((error) => throwError(() => error)));
   }
 
-  buscarDadosAdicionaisMulti<T>(
-    itens: T[],
-    campos: {
-      campoId: keyof T;
-      campoResultado: string;
-      servico: (id: any) => Observable<any>;
-      campoNome: string;
-    }[]
-  ): Observable<T[]> {
-    const requisicoes = itens.map((item) =>
-      forkJoin(
-        campos.map((c) =>
-          c
-            .servico((item as any)[c.campoId]) // ⬅ Corrigido aqui
-            .pipe(map((res) => ({ campo: c, resultado: res })))
-        )
-      ).pipe(
-        map((resultados) => {
-          const novoItem = { ...item };
-          for (const { campo, resultado } of resultados) {
-            (novoItem as any)[campo.campoResultado] =
-              resultado?.[campo.campoNome];
-          }
-          return novoItem;
-        })
-      )
-    );
+  obterTodos(endpoint: string): Observable<any> {
+    const url = `${this.apiUrl}/${endpoint}/`;
 
-    return forkJoin(requisicoes);
+    return this.http
+      .get(url)
+      .pipe(catchError((error) => throwError(() => error)));
+  }
+
+  obterPorId(endpoint: string, id: number): Observable<any> {
+    const url = `${this.apiUrl}/${endpoint}/${id}`;
+
+    return this.http
+      .get(url)
+      .pipe(catchError((error) => throwError(() => error)));
+  }
+
+  cadastrar(endpoint: string, data: any): Observable<any> {
+    const url = `${this.apiUrl}/${endpoint}/`;
+
+    return this.http
+      .post(url, data)
+      .pipe(catchError((error) => throwError(() => error)));
+  }
+
+  atualizar(endpoint: string, data: any): Observable<any> {
+    const url = `${this.apiUrl}/${endpoint}/`;
+
+    return this.http
+      .put(url, data)
+      .pipe(catchError((error) => throwError(() => error)));
+  }
+
+  deletar(endpoint: string, id: any): Observable<any> {
+    const url = `${this.apiUrl}/${endpoint}/${id}`;
+
+    return this.http
+      .delete(url)
+      .pipe(catchError((error) => throwError(() => error)));
+  }
+
+  sequencia(endpoint:string) {
+    const url = `${this.apiUrl}/${endpoint}/sequencia`;
+    return this.http
+      .get(url)
+      .pipe(catchError((error) => throwError(() => error)));
   }
 }

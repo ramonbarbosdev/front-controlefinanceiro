@@ -6,13 +6,8 @@ import { Conta } from '../../../models/conta';
 import { ContaService } from '../../../services/conta.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
-import { DashboardComponent } from "../../dashboard/dashboard.component";
 import { HeaderComponent } from "../../component/header/header.component";
 import { SelectComponent } from "../../component/select/select.component";
-import { TipocontaService } from '../../../services/tipoconta.service';
-import { Tipoconta } from '../../../models/tipoconta';
-import { StatusContaService } from '../../../services/status-conta.service';
-import { StatusConta } from '../../../models/status-conta';
 import { BaseService } from '../../../services/base.service';
 
 @Component({
@@ -38,9 +33,9 @@ export class ContaformComponent {
   private route = inject(ActivatedRoute);
   location = inject(Location);
   nm_titulo = 'Cadastrar Conta';
+  endpoint = 'conta';
 
   relacionadoObjeto = this.service.relacionadoObjeto;
-
 
   ngOnInit() {
     this.onShow();
@@ -49,8 +44,14 @@ export class ContaformComponent {
   onShow() {
     const key = this.route.snapshot.paramMap.get('id');
 
-    this.baseService.obterObjetoRelacionado('tipoconta', this.relacionadoObjeto);
-    this.baseService.obterObjetoRelacionado('statusconta', this.relacionadoObjeto);
+    this.baseService.obterObjetoRelacionado(
+      'tipoconta',
+      this.relacionadoObjeto
+    );
+    this.baseService.obterObjetoRelacionado(
+      'statusconta',
+      this.relacionadoObjeto
+    );
 
     if (!key) {
       this.obterSequencia();
@@ -65,7 +66,7 @@ export class ContaformComponent {
 
   onEdit(id: any) {
     if (!id) return;
-    this.service.obterPorId(id).subscribe({
+    this.baseService.obterPorId(this.endpoint,id).subscribe({
       next: (res: any) => {
         this.objeto = res;
       },
@@ -81,7 +82,7 @@ export class ContaformComponent {
   }
 
   obterSequencia() {
-    this.service.sequencia().subscribe({
+    this.baseService.sequencia(this.endpoint).subscribe({
       next: (res: any) => {
         this.objeto.cd_conta = res;
       },
@@ -97,7 +98,7 @@ export class ContaformComponent {
   }
 
   onSave() {
-    this.service.cadastrar(this.objeto).subscribe({
+    this.baseService.cadastrar(this.endpoint, this.objeto).subscribe({
       next: (res: any) => {
         Swal.fire({
           icon: 'success',
@@ -108,16 +109,14 @@ export class ContaformComponent {
         this.onClose();
       },
       error: (err) => {
-        console.log(err)
+        console.log(err);
         Swal.fire({
           icon: 'error',
-          title: "Erro ao salvar!",
+          title: 'Erro ao salvar!',
           text: err.error.error,
           confirmButtonText: 'OK',
         });
       },
     });
   }
-
-
 }
