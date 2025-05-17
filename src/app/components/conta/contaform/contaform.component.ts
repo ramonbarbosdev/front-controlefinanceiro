@@ -87,12 +87,7 @@ export class ContaformComponent {
         this.objeto.cd_conta = res;
       },
       error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: err.error.code,
-          text: err.error.error,
-          confirmButtonText: 'OK',
-        });
+       
       },
     });
   }
@@ -100,22 +95,10 @@ export class ContaformComponent {
   onSave() {
     this.baseService.cadastrar(this.endpoint, this.objeto).subscribe({
       next: (res: any) => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Sucesso',
-          text: 'Tipo de conta cadastrado com sucesso!',
-          confirmButtonText: 'OK',
-        });
         this.onClose();
       },
       error: (err) => {
-        console.log(err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Erro ao salvar!',
-          text: err.error.error,
-          confirmButtonText: 'OK',
-        });
+
       },
     });
   }
