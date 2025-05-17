@@ -112,13 +112,11 @@ export class LancamentoformComponent {
   }
 
   onSave() {
-    this.baseService.cadastrar(this.endpoint, this.objeto).subscribe({
+    this.baseService.cadastrar(`${this.endpoint}/cadastrar`, this.objeto).subscribe({
       next: (res: any) => {
         this.onClose();
       },
-      error: (err) => {
-
-      },
+      error: (err) => {},
     });
   }
 

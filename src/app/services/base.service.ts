@@ -94,7 +94,7 @@ export class BaseService {
   cadastrar(endpoint: string, data: any): Observable<any> {
     const url = `${this.apiUrl}/${endpoint}/`;
 
-      return this.http.post<any>(url, data).pipe(
+    return this.http.post<any>(url, data).pipe(
         tap((res) => {
           Swal.fire({
             icon: 'success',
