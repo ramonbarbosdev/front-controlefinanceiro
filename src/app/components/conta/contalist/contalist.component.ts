@@ -33,7 +33,19 @@ export class ContalistComponent implements OnInit {
   }
 
   onReload() {
-    this.obterTodos();
+
+    this.baseService.obterObjetoRelacionado(
+      'tipoconta',
+      this.relacionadoObjeto
+    );
+    this.baseService.obterObjetoRelacionado(
+      'statusconta',
+      this.relacionadoObjeto
+    );
+
+    this.baseService.obterTodos(this.endpoint).subscribe((res) => {
+      this.objetos = res;
+    });
   }
 
   onEdit(item: any) {
@@ -50,30 +62,10 @@ export class ContalistComponent implements OnInit {
         next: (res: any) => {
           this.onReload();
         },
-        error: (err) => {
-
-        },
+        error: (err) => {},
       });
     }
   }
 
-  obterTodos() {
-    this.baseService.obterObjetoRelacionado(
-      'tipoconta',
-      this.relacionadoObjeto
-    );
-    this.baseService.obterObjetoRelacionado(
-      'statusconta',
-      this.relacionadoObjeto
-    );
-
-    this.baseService.obterTodos(this.endpoint).subscribe({
-      next: (res) => {
-        this.objetos = res;
-      },
-      error: (err) => {
-      
-      },
-    });
-  }
+  
 }

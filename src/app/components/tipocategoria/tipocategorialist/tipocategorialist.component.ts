@@ -6,6 +6,7 @@ import { Tipoconta } from '../../../models/tipoconta';
 import { CommonModule, Location } from '@angular/common';
 import { Tipocategoria } from '../../../models/tipocategoria';
 import { HeaderComponent } from "../../component/header/header.component";
+import { BaseService } from '../../../services/base.service';
 
 @Component({
   selector: 'app-tipocategorialist',
@@ -18,10 +19,12 @@ export class TipocategorialistComponent {
   public objetos: Tipocategoria[] | any = [];
 
   service = inject(TipocategoriaService);
+  baseService = inject(BaseService);
   router = inject(Router);
   nm_titulo = 'Tipo de Categoria';
   location = inject(Location);
   primaryKey = 'id_tipocategoria';
+  endpoint = 'tipocategoria';
 
   ngOnInit() {
     this.onReload();
@@ -36,7 +39,7 @@ export class TipocategorialistComponent {
   }
 
   onReload() {
-    this.service.obterTodos().subscribe((res) => {
+    this.baseService.obterTodos(this.endpoint).subscribe((res) => {
       this.objetos = res;
     });
   }
@@ -48,17 +51,12 @@ export class TipocategorialistComponent {
 
   onDelete(item: any) {
     if (item) {
-      this.service.deletar(item[this.primaryKey]).subscribe({
+      this.baseService.deletar(this.endpoint, item[this.primaryKey]).subscribe({
         next: (res: any) => {
           this.onReload();
         },
         error: (err) => {
-          Swal.fire({
-            icon: 'error',
-            title: err.error.code,
-            text: err.error.error,
-            confirmButtonText: 'OK',
-          });
+         
         },
       });
     }

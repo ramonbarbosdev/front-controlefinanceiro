@@ -19,7 +19,6 @@ import { Statuslancamento } from '../../../models/statuslancamento';
 })
 export class LancamentolistComponent {
   nm_titulo = 'Lancamento';
-  componente = 'lancamento';
 
   public objetos: Lancamento[] | any = [];
   service = inject(LancamentoService);
@@ -28,6 +27,7 @@ export class LancamentolistComponent {
 
   router = inject(Router);
   primaryKey = 'id_lancamento';
+  endpoint = 'lancamento';
 
   relacionadoObjeto = this.service.relacionadoObjeto;
 
@@ -36,54 +36,33 @@ export class LancamentolistComponent {
   }
 
   onReload() {
-    this.obterTodos();
+    this.baseService.obterObjetoRelacionado('conta', this.relacionadoObjeto);
+    this.baseService.obterObjetoRelacionado(
+      'statuslancamento',
+      this.relacionadoObjeto
+    );
+
+    this.baseService.obterTodos(this.endpoint).subscribe((res) => {
+      this.objetos = res;
+    });
   }
 
   onEdit(item: any) {
     if (item)
       this.router.navigate([
-        'admin/' + this.componente + 'form',
+        'admin/' + this.endpoint + 'form',
         item[this.primaryKey],
       ]);
   }
 
   onDelete(item: any) {
     if (item) {
-      this.service.deletar(item[this.primaryKey]).subscribe({
+      this.baseService.deletar(this.endpoint, item[this.primaryKey]).subscribe({
         next: (res: any) => {
           this.onReload();
         },
-        error: (err) => {
-          Swal.fire({
-            icon: 'error',
-            title: err.error.code,
-            text: err.error.error,
-            confirmButtonText: 'OK',
-          });
-        },
+        error: (err) => {},
       });
     }
   }
-
-  obterTodos()
-  {
-    this.baseService.obterObjetoRelacionado('conta', this.relacionadoObjeto);
-    this.baseService.obterObjetoRelacionado('statuslancamento', this.relacionadoObjeto);
-
-    this.service.obterTodos().subscribe({
-      next: (res) => {
-        this.objetos = res;
-      },
-      error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: err.error?.code || 'Erro',
-          text: err.error?.error || 'Erro ao buscar dados adicionais',
-          confirmButtonText: 'OK',
-        });
-      },
-    });
-  }
-
-
 }

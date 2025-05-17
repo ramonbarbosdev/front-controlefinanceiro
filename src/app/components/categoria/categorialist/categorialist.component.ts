@@ -15,13 +15,13 @@ import { HeaderComponent } from '../../component/header/header.component';
 })
 export class CategorialistComponent {
   nm_titulo = 'Categoria';
-  endpoint = 'categoria';
 
   public objetos: Categoria[] | any = [];
   service = inject(CategoriaService);
   baseService = inject(BaseService);
   router = inject(Router);
   primaryKey = 'id_categoria';
+  endpoint = 'categoria';
 
   relacionadoObjeto = this.service.relacionadoObjeto;
 
@@ -30,7 +30,14 @@ export class CategorialistComponent {
   }
 
   onReload() {
-    this.obterTodos();
+    this.baseService.obterObjetoRelacionado(
+      'tipocategoria',
+      this.relacionadoObjeto
+    );
+
+    this.baseService.obterTodos(this.endpoint).subscribe((res) => {
+      this.objetos = res;
+    });
   }
 
   onEdit(item: any) {
@@ -47,36 +54,8 @@ export class CategorialistComponent {
         next: (res: any) => {
           this.onReload();
         },
-        error: (err) => {
-          Swal.fire({
-            icon: 'error',
-            title: err.error.code,
-            text: err.error.error,
-            confirmButtonText: 'OK',
-          });
-        },
+        error: (err) => {},
       });
     }
-  }
-
-  obterTodos() {
-    this.baseService.obterObjetoRelacionado(
-      'tipocategoria',
-      this.relacionadoObjeto
-    );
-
-    this.baseService.obterTodos(this.endpoint).subscribe({
-      next: (res) => {
-        this.objetos = res;
-      },
-      error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: err.error?.code || 'Erro',
-          text: err.error?.error || 'Erro ao buscar dados adicionais',
-          confirmButtonText: 'OK',
-        });
-      },
-    });
   }
 }

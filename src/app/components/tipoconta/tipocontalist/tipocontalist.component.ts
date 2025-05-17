@@ -6,6 +6,7 @@ import { Router, RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
 import { HeaderComponent } from "../../component/header/header.component";
+import { BaseService } from '../../../services/base.service';
 
 @Component({
   selector: 'app-tipocontalist',
@@ -17,10 +18,12 @@ export class TipocontalistComponent implements OnInit {
   public objetos: Tipoconta[] | any = [];
 
   service = inject(TipocontaService);
+  baseService = inject(BaseService);
   router = inject(Router);
   nm_titulo = 'Tipo de Conta';
   location = inject(Location);
   primaryKey = 'id_tipoconta';
+  endpoint = 'tipoconta';
 
   ngOnInit() {
     this.onReload();
@@ -36,7 +39,7 @@ export class TipocontalistComponent implements OnInit {
   }
 
   onReload() {
-    this.service.obterTodos().subscribe((res) => {
+    this.baseService.obterTodos(this.endpoint).subscribe((res) => {
       this.objetos = res;
     });
   }
@@ -48,18 +51,11 @@ export class TipocontalistComponent implements OnInit {
 
   onDelete(item: any) {
     if (item) {
-      this.service.deletar(item[this.primaryKey]).subscribe({
+      this.baseService.deletar(this.endpoint, item[this.primaryKey]).subscribe({
         next: (res: any) => {
           this.onReload();
         },
-        error: (err) => {
-          Swal.fire({
-            icon: 'error',
-            title: err.error.code,
-            text: err.error.error,
-            confirmButtonText: 'OK',
-          });
-        },
+        error: (err) => {},
       });
     }
   }
