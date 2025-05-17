@@ -24,8 +24,16 @@
       <tr *ngFor="let item of objetos">
         <td>{{ item.cd_conta }}</td>
         <td>{{ item.nm_conta }}</td>
-        <td>{{ item.nm_tipoconta }}</td>
-        <td>{{ item.nm_statusconta }}</td>
+        <td>
+          {{
+            this.baseService.getNomeRelacionado('id_tipoconta', item.id_tipoconta, 'tipoconta', 'id_tipoconta', 'nm_tipoconta',  this.relacionadoObjeto)
+          }}
+        </td>
+        <td>
+          {{
+            this.baseService.getNomeRelacionado('id_statusconta', item.id_statusconta, 'statusconta', 'id_statusconta', 'nm_statusconta',  this.relacionadoObjeto)
+          }}
+        </td>
         <td>
           <a type="button" (click)="onEdit(item)" title="editar" class="btn-editar">
             <i class="bi bi-pencil-square"></i>

@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { TipocontaService } from './tipoconta.service';
 import { StatusContaService } from './status-conta.service';
+import { Tipoconta } from '../models/tipoconta';
+import { StatusConta } from '../models/status-conta';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +18,12 @@ export class ContaService {
   statusContaService = inject(StatusContaService);
 
   constructor(private http: HttpClient) {}
+
+   relacionadoObjeto = {
+      tipoconta: [] as Tipoconta[],
+      statusconta: [] as StatusConta[],
+    };
+
 
   obterTodos(): Observable<any> {
     const url = `${this.apiUrl}/`;

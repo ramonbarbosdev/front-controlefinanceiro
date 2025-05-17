@@ -8,6 +8,7 @@ import { TipocontaService } from '../../../services/tipoconta.service';
 import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
 import { HeaderComponent } from "../../component/header/header.component";
+import { BaseService } from '../../../services/base.service';
 
 @Component({
   selector: 'app-contalist',
@@ -21,8 +22,11 @@ export class ContalistComponent implements OnInit {
 
   public objetos: Conta[] | any = [];
   service = inject(ContaService);
+  baseService = inject(BaseService);
   router = inject(Router);
   primaryKey = 'id_conta';
+
+  relacionadoObjeto = this.service.relacionadoObjeto;
 
   ngOnInit() {
     this.onReload();
@@ -59,20 +63,21 @@ export class ContalistComponent implements OnInit {
   }
 
   obterTodos() {
-    this.service.obterTodos().subscribe((res) => {
-      this.service.buscarDadosAdicionais(res).subscribe({
-        next: (dadosCompletos) => {
-          this.objetos = dadosCompletos;
-        },
-        error: (err) => {
-          Swal.fire({
-            icon: 'error',
-            title: err.error?.code || 'Erro',
-            text: err.error?.error || 'Erro ao buscar dados adicionais',
-            confirmButtonText: 'OK',
-          });
-        },
-      });
+    this.baseService.obterObjetoRelacionado('tipoconta', this.relacionadoObjeto);
+    this.baseService.obterObjetoRelacionado('statusconta', this.relacionadoObjeto);
+
+    this.service.obterTodos().subscribe({
+      next: (res) => {
+        this.objetos = res;
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: err.error?.code || 'Erro',
+          text: err.error?.error || 'Erro ao buscar dados adicionais',
+          confirmButtonText: 'OK',
+        });
+      },
     });
   }
 }

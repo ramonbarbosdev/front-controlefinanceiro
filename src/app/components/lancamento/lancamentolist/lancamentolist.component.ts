@@ -8,6 +8,8 @@ import { BaseService } from '../../../services/base.service';
 import { switchMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../component/header/header.component';
+import { Conta } from '../../../models/conta';
+import { Statuslancamento } from '../../../models/statuslancamento';
 
 @Component({
   selector: 'app-lancamentolist',
@@ -27,14 +29,7 @@ export class LancamentolistComponent {
   router = inject(Router);
   primaryKey = 'id_lancamento';
 
-  dadosAdicionais = [
-    {
-      campoId: 'id_conta',
-      campoResultado: 'nm_conta',
-      servico: (id: number) => this.contaService.obterPorId(id),
-      campoNome: 'nm_conta',
-    },
-  ];
+  relacionadoObjeto = this.service.relacionadoObjeto;
 
   ngOnInit() {
     this.onReload();
@@ -70,26 +65,25 @@ export class LancamentolistComponent {
     }
   }
 
-  obterTodos() {
-    this.service
-      .obterTodos()
-      .pipe(
-        switchMap((res) =>
-          this.baseService.buscarDadosAdicionaisMulti(res, this.dadosAdicionais)
-        )
-      )
-      .subscribe({
-        next: (dadosCompletos) => {
-          this.objetos = dadosCompletos;
-        },
-        error: (err) => {
-          Swal.fire({
-            icon: 'error',
-            title: err.error?.code || 'Erro',
-            text: err.error?.error || 'Erro ao buscar dados adicionais',
-            confirmButtonText: 'OK',
-          });
-        },
-      });
+  obterTodos()
+  {
+    this.baseService.obterObjetoRelacionado('conta', this.relacionadoObjeto);
+    this.baseService.obterObjetoRelacionado('statuslancamento', this.relacionadoObjeto);
+
+    this.service.obterTodos().subscribe({
+      next: (res) => {
+        this.objetos = res;
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: err.error?.code || 'Erro',
+          text: err.error?.error || 'Erro ao buscar dados adicionais',
+          confirmButtonText: 'OK',
+        });
+      },
+    });
   }
+
+
 }

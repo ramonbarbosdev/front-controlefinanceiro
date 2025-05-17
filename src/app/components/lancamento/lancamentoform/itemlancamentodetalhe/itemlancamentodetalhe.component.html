@@ -1,0 +1,112 @@
+
+<div class="row">
+  <label >Item do Lançamento</label>
+</div>
+
+<div class="row">
+
+  <div class="col-40">
+    <app-select
+      [label]="'Categoria:'"
+      [inputId]="'id_categoria'"
+      [required]="true"
+      [(model)]="itemTemp.id_categoria"
+      [options]="relacionado.categoria"
+      [valueField]="'id_categoria'"
+      [labelField]="'nm_categoria'"
+    >
+    </app-select>
+  </div>
+  <div class="col-40">
+    <app-select
+      [label]="'Metodo:'"
+      [inputId]="'id_metodopagamento'"
+      [required]="true"
+      [(model)]="itemTemp.id_metodopagamento"
+      [options]="relacionado.metodopagamento"
+      [valueField]="'id_metodopagamento'"
+      [labelField]="'ds_metodopagamento'"
+    >
+  </app-select>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-40">
+    <app-select
+      [label]="'Operacao:'"
+      [inputId]="'id_tipooperacao'"
+      [required]="true"
+      [(model)]="itemTemp.id_tipooperacao"
+      [options]="relacionado.tipooperacao"
+      [valueField]="'id_tipooperacao'"
+      [labelField]="'ds_tipooperacao'"
+    >
+</app-select>
+  </div>
+  <div class="col-40">
+    <app-input-number
+      [label]="'Valor'"
+      [inputId]="'vl_movimento'"
+      [(model)]="itemTemp.vl_movimento"
+      [required]="true"
+      >
+    </app-input-number>
+  </div>
+</div>
+
+<div class="row">
+  <app-button
+      [text]="''"
+      [type]="'button'"
+      [icon]="indexEditando != null ? 'bi bi-pencil-square' : 'bi bi-plus-lg'"
+      [color]="''"
+      [backgroundColor]="''"
+      (clickEvent)="adicionarItem()">
+    </app-button>
+</div>
+
+
+<div class="row">
+  <div class="col-100">
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Categoria</th>
+          <th>Metodo</th>
+          <th>Operação</th>
+          <th>Valor</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of objeto[nomeItem]; let i = index">
+          <td>
+            {{
+              getNomeRelacionado('id_categoria', item.id_categoria, 'categoria', 'id_categoria', 'nm_categoria')
+            }}
+          </td>
+          <td>
+            {{
+              getNomeRelacionado('id_metodopagamento', item.id_metodopagamento, 'metodopagamento', 'id_metodopagamento', 'ds_metodopagamento')
+            }}
+          </td>
+          <td>
+            {{
+              getNomeRelacionado('id_tipooperacao', item.id_tipooperacao, 'tipooperacao', 'id_tipooperacao', 'ds_tipooperacao')
+            }}
+          </td>
+          <td>{{ item.vl_movimento | currency:'BRL' }}</td>
+          <td>
+            <a title="botao" class="btn-editar" (click)="editarItem(i)">  <i class="bi bi-pencil-square"></i></a>
+            <a title="botao" class="btn-deletar" (click)="removerItem(i)"> <i class="bi bi-trash-fill"></i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+  </div>
+</div>

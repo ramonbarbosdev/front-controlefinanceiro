@@ -1,8 +1,6 @@
 <div class="container">
   <div class="card">
 
-
-
      <app-header
      [titulo]="nm_titulo"
      [fl_list]="false"
@@ -26,7 +24,7 @@
             [inputId]="'id_conta'"
             [required]="true"
             [(model)]="objeto.id_conta"
-            [options]="objetoConta"
+            [options]="relacionadoObjeto.conta"
             [valueField]="'id_conta'"
             [labelField]="'nm_conta'"
           >
@@ -50,7 +48,7 @@
             [inputId]="'id_statuslancamento'"
             [required]="true"
             [(model)]="objeto.id_statuslancamento"
-            [options]="objetoStatus"
+            [options]="relacionadoObjeto.statuslancamento"
             [valueField]="'id_statuslancamento'"
             [labelField]="'ds_statuslancamento'"
           ></app-select>
@@ -62,7 +60,6 @@
           [(model)]="objeto.vl_lancamento"
           [required]="true"
           >
-
           </app-input-number>
         </div>
       </div>
@@ -79,7 +76,17 @@
         </div>
       </div>
 
+
+
     </form>
+
+    <app-itemlancamentodetalhe
+      [(objeto)]= "objeto"
+      [itemTemp]= "objetoItemLancamento"
+      [nomeItem]="'itenslancamento'"
+      [relacionado] = "relacionado"
+    >
+  </app-itemlancamentodetalhe>
 
     <div class="row">
         <app-button

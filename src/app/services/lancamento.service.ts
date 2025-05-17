@@ -4,6 +4,9 @@ import { catchError, forkJoin, map, Observable, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ContaService } from './conta.service';
+import { Conta } from '../models/conta';
+import { Statuslancamento } from '../models/statuslancamento';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +15,13 @@ export class LancamentoService {
   private readonly apiUrl = `${environment.apiUrl}/lancamento`;
 
   constructor(private http: HttpClient) {}
+
+  relacionadoObjeto = {
+    conta: [] as Conta[],
+    statuslancamento: [] as Statuslancamento[],
+  };
+
+  baseService = inject(BaseService);
 
   obterTodos(): Observable<any> {
     const url = `${this.apiUrl}/`;
@@ -30,7 +40,7 @@ export class LancamentoService {
   }
 
   cadastrar(data: any): Observable<any> {
-    const url = `${this.apiUrl}/`;
+    const url = `${this.apiUrl}/cadastrar/`;
 
     return this.http
       .post(url, data)
@@ -60,5 +70,11 @@ export class LancamentoService {
       .pipe(catchError((error) => throwError(() => error)));
   }
 
- 
+  obterStatusLancamentoPorId(id: number): Observable<any> {
+    const url = `${environment.apiUrl}/statuslancamento/${id}`;
+
+    return this.http
+      .get(url)
+      .pipe(catchError((error) => throwError(() => error)));
+  }
 }

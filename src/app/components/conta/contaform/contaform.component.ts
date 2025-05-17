@@ -13,6 +13,7 @@ import { TipocontaService } from '../../../services/tipoconta.service';
 import { Tipoconta } from '../../../models/tipoconta';
 import { StatusContaService } from '../../../services/status-conta.service';
 import { StatusConta } from '../../../models/status-conta';
+import { BaseService } from '../../../services/base.service';
 
 @Component({
   selector: 'app-contaform',
@@ -29,17 +30,17 @@ import { StatusConta } from '../../../models/status-conta';
 })
 export class ContaformComponent {
   public objeto: Conta = new Conta();
-  public objetoTipoConta: Tipoconta[] | any = [];
-  public objetoStatusConta: StatusConta[] | any = [];
 
   service = inject(ContaService);
-  tipoContaService = inject(TipocontaService);
-  statusContaService = inject(StatusContaService);
+  baseService = inject(BaseService);
 
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   location = inject(Location);
   nm_titulo = 'Cadastrar Conta';
+
+  relacionadoObjeto = this.service.relacionadoObjeto;
+
 
   ngOnInit() {
     this.onShow();
@@ -48,8 +49,8 @@ export class ContaformComponent {
   onShow() {
     const key = this.route.snapshot.paramMap.get('id');
 
-    this.obterTipoConta();
-    this.obterStatus();
+    this.baseService.obterObjetoRelacionado('tipoconta', this.relacionadoObjeto);
+    this.baseService.obterObjetoRelacionado('statusconta', this.relacionadoObjeto);
 
     if (!key) {
       this.obterSequencia();
@@ -118,19 +119,5 @@ export class ContaformComponent {
     });
   }
 
-  obterTipoConta() {
-    this.tipoContaService.obterTodos().subscribe({
-      next: (res: any) => {
-        this.objetoTipoConta = res;
-      },
-    });
-  }
 
-  obterStatus() {
-    this.statusContaService.obterTodos().subscribe({
-      next: (res: any) => {
-        this.objetoStatusConta = res;
-      },
-    });
-  }
 }

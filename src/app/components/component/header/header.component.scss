@@ -60,3 +60,13 @@
 .col-novo a:hover:not(:disabled) {
   color: $color-text-secondary;
 }
+
+/* Responsividade */
+@media (max-width: 768px) {
+
+  .header
+  {
+    font-size: 0.9rem;
+  }
+
+}

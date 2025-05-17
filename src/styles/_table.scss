@@ -73,10 +73,13 @@ th:focus {
 /* Responsividade */
 @media (max-width: 768px) {
 
-  th,
+  th
+  {
+    font-size: 0.7rem;
+  }
   td {
-    font-size: 0.9rem;
-    padding: 10px 5px;
+    padding: 10px 1px 0px 1px;
+    font-size: 0.8rem;
   }
 
   table {
