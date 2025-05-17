@@ -48,6 +48,12 @@ export class ContalistComponent implements OnInit {
     if (item) {
       this.baseService.deletar(this.endpoint, item[this.primaryKey]).subscribe({
         next: (res: any) => {
+          Swal.fire({
+            icon: 'success',
+            title: '',
+            text: res.error,
+            confirmButtonText: 'OK',
+          });
           this.onReload();
         },
         error: (err) => {

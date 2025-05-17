@@ -93,7 +93,6 @@ export class LancamentoformComponent {
     this.service.obterPorId(id).subscribe({
       next: (res: any) => {
         res.dt_lancamento = formatarDataParaInput(res.dt_lancamento);
-        console.log(res);
         this.objeto = res;
       },
       error: (err) => {
