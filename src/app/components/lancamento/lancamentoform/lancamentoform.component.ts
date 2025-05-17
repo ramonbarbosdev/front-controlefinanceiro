@@ -49,6 +49,7 @@ export class LancamentoformComponent {
   private route = inject(ActivatedRoute);
   location = inject(Location);
   nm_titulo = 'Cadastrar Lançamento';
+  endpoint = 'lancamento';
 
   relacionadoObjeto = this.service.relacionadoObjeto;
 
@@ -90,58 +91,33 @@ export class LancamentoformComponent {
   onEdit(id: any) {
     if (!id) return;
 
-    this.service.obterPorId(id).subscribe({
+    this.baseService.obterPorId(this.endpoint, id).subscribe({
       next: (res: any) => {
         res.dt_lancamento = formatarDataParaInput(res.dt_lancamento);
         this.objeto = res;
       },
-      error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: err.error.code,
-          text: err.error.error,
-          confirmButtonText: 'OK',
-        });
-      },
+      error: (err) => {},
     });
   }
 
   obterSequencia() {
-    this.service.sequencia().subscribe({
+    this.baseService.sequencia(this.endpoint).subscribe({
       next: (res: any) => {
         this.objeto.cd_lancamento = res;
       },
       error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: err.error.code,
-          text: err.error.error,
-          confirmButtonText: 'OK',
-        });
+
       },
     });
   }
 
   onSave() {
-    console.log(this.objeto);
-    this.service.cadastrar(this.objeto).subscribe({
+    this.baseService.cadastrar(this.endpoint, this.objeto).subscribe({
       next: (res: any) => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Sucesso',
-          text: 'Tipo de conta cadastrado com sucesso!',
-          confirmButtonText: 'OK',
-        });
         this.onClose();
       },
       error: (err) => {
-        console.log(err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Erro ao salvar!',
-          text: err.error.error,
-          confirmButtonText: 'OK',
-        });
+
       },
     });
   }
@@ -152,12 +128,7 @@ export class LancamentoformComponent {
         (this.relacionado as any)[endpoint] = res;
       },
       error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Erro ao consultar relacionamento!',
-          text: err.error.error,
-          confirmButtonText: 'OK',
-        });
+
       },
     });
   }

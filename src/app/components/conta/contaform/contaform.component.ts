@@ -71,12 +71,7 @@ export class ContaformComponent {
         this.objeto = res;
       },
       error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: err.error.code,
-          text: err.error.error,
-          confirmButtonText: 'OK',
-        });
+      
       },
     });
   }
@@ -87,7 +82,7 @@ export class ContaformComponent {
         this.objeto.cd_conta = res;
       },
       error: (err) => {
-       
+
       },
     });
   }
